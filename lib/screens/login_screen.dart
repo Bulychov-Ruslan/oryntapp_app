@@ -1,7 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oryntapp/main.dart';
 import 'package:oryntapp/services/snack_bar.dart';
+
+import 'package:oryntapp/language/language.dart';
+import 'package:oryntapp/language/language_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextInputController = TextEditingController();
   TextEditingController passwordTextInputController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -67,10 +74,51 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
+
       appBar: AppBar(
         title: const Text('Войти'),
+        // backgroundColor: Theme.of(context).colorScheme.background,
+
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+
+              items: Language.languageList()
+                  .map<DropdownMenuItem<Language>>(
+                    (e) => DropdownMenuItem<Language>(
+                  value: e,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        e.flag,
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      Text(e.name)
+                    ],
+                  ),
+                ),
+              )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
+
+
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Form(
@@ -120,15 +168,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
               ElevatedButton(
                 onPressed: login,
-                child: const Center(child: Text('Войти')),
+                child: Center(
+                    child: Text(
+                      translation(context).login,
+                      style: TextStyle(
+                          fontSize: 20
+                      ),
+                    ),
+                ),
               ),
 
               const SizedBox(height: 10),
 
               TextButton(
                 onPressed: () => Navigator.of(context).pushNamed('/signup'),
-                child: const Text(
-                  'Регистрация',
+                child: Text(
+                  translation(context).signup,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                   ),
@@ -138,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed('/reset_password'),
-                child: const Text('Сбросить пароль'),
+                child: Text(translation(context).resetPassword),
               ),
 
             ],

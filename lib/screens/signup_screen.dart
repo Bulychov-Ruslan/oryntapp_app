@@ -90,10 +90,14 @@ class _SignUpScreen extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
+
       appBar: AppBar(
         title: const Text('Зарегистрироваться'),
+        backgroundColor: Theme.of(context).colorScheme.background,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Form(
@@ -169,7 +173,14 @@ class _SignUpScreen extends State<SignUpScreen> {
 
               ElevatedButton(
                 onPressed: signUp,
-                child: const Center(child: Text('Регистрация')),
+                child: const Center(
+                    child: Text(
+                        'Регистрация',
+                        style: TextStyle(
+                            fontSize: 20,
+                        ),
+                    ),
+                ),
               ),
 
               const SizedBox(height: 10),

@@ -12,6 +12,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart' as Path;
 
+import 'package:oryntapp/language/language_constants.dart';
+import 'package:oryntapp/language/language.dart';
+
+import '../main.dart';
+
+
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
@@ -47,6 +53,7 @@ class _AccountScreenState extends State<AccountScreen> {
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
+            
             hintStyle: TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
@@ -164,8 +171,11 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      backgroundColor: Theme.of(context).colorScheme.background,
+
       appBar: AppBar(
-        title: const Text('Аккаунт'),
+        title: Text(translation(context).account),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -174,6 +184,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ],
       ),
+
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection("Users")
@@ -226,17 +237,54 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
+                
                 const SizedBox(height: 24),
+                
                 Text('${currentUser?.email}',
                     style: const TextStyle(fontSize: 16)),
+                
                 const SizedBox(height: 24),
+                
                 MyTextBox(
                   text: userData['username'],
                   sectionName: 'username',
                   onPressed: () => editField('username'),
                 ),
+
+                const SizedBox(height: 24),
+
+                Center(
+                    child: DropdownButton<Language>(
+                      iconSize: 30,
+                      hint: const Text('Select Language'),
+                      onChanged: (Language? language) async {
+                        if (language != null) {
+                          Locale _locale = await setLocale(language.languageCode);
+                          MyApp.setLocale(context, _locale);
+                        }
+                      },
+                      items: Language.languageList()
+                          .map<DropdownMenuItem<Language>>(
+                            (e) => DropdownMenuItem<Language>(
+                          value: e,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Text(
+                                e.flag,
+                                style: const TextStyle(fontSize: 30),
+                              ),
+                              Text(e.name)
+                            ],
+                          ),
+                        ),
+                      )
+                          .toList(),
+                    )),
+
               ],
             );
+
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Error: ${snapshot.error}'),

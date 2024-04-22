@@ -15,7 +15,14 @@ import 'package:oryntapp/screens/account_screen.dart';
 
 import 'package:oryntapp/services/firebase_streem.dart';
 
+import 'package:oryntapp/theme/dark_theme.dart';
+import 'package:oryntapp/theme/light_theme.dart';
+
 import 'firebase_options.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:oryntapp/language/language_constants.dart';
 
 
 Future<void> main() async {
@@ -26,8 +33,32 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    getLocale().then((locale) => setLocale(locale));
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +69,16 @@ class MyApp extends StatelessWidget {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
       ),
+
+      // theme: lightTheme,
+      // darkTheme: darkTheme,
+
+
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
+
+
       routes: {
         '/': (context) => const FirebaseStream(),
         '/welcome': (context) => const WelcomeScreen(),
@@ -50,7 +91,7 @@ class MyApp extends StatelessWidget {
         '/reset_password': (context) => const ResetPasswordScreen(),
         '/verify_email': (context) => const VerifyEmailScreen(),
       },
-      initialRoute: '/'
+      initialRoute: '/',
     );
   }
 }
