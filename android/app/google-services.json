@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "735094012766",
+    "project_id": "oryntapp-4838c",
+    "storage_bucket": "oryntapp-4838c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735094012766:android:b62e340c2ac1e0c35eadcf",
+        "android_client_info": {
+          "package_name": "com.example.oryntapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFqGtluPNQYJZST2JTSl53h7DCUGolPKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

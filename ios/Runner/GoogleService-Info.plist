@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBLP1JQx-IVtIOMWhdMbNrlgFIVgAAvgsQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>735094012766</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.oryntapp</string>
+	<key>PROJECT_ID</key>
+	<string>oryntapp-4838c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>oryntapp-4838c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:735094012766:ios:19a25ed97320d1b35eadcf</string>
+</dict>
+</plist>
