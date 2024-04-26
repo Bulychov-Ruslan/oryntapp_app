@@ -29,11 +29,10 @@ class _AccountScreenState extends State<AccountScreen> {
   final currentUser = FirebaseAuth.instance.currentUser;
   final userCollection = FirebaseFirestore.instance.collection("Users");
 
+
   Future<void> signOut() async {
     final navigator = Navigator.of(context);
-
     await FirebaseAuth.instance.signOut();
-
     navigator.pushNamedAndRemoveUntil(
         '/login', (Route<dynamic> route) => false);
   }
@@ -53,7 +52,7 @@ class _AccountScreenState extends State<AccountScreen> {
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
-            
+
             hintStyle: TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
@@ -139,7 +138,6 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  // Метод для показа фото в полном размере с использованием Hero Animation
   void _showFullScreenImage(String imageUrl) {
     showDialog(
       context: context,
@@ -168,10 +166,10 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Theme.of(context).colorScheme.background,
 
       appBar: AppBar(
@@ -208,7 +206,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   )
-                : Hero(
+                : const Hero(
                     tag: 'profile_photo',
                     child: CircleAvatar(
                       radius: 64,
@@ -237,14 +235,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 Text('${currentUser?.email}',
                     style: const TextStyle(fontSize: 16)),
-                
+
                 const SizedBox(height: 24),
-                
+
                 MyTextBox(
                   text: userData['username'],
                   sectionName: 'username',
@@ -278,9 +276,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                      )
-                          .toList(),
-                    )),
+                      ).toList(),
+                    )
+                ),
 
               ],
             );

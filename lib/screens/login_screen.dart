@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
 
       appBar: AppBar(
-        title: const Text('Войти'),
+        title: Text(translation(context).login),
         // backgroundColor: Theme.of(context).colorScheme.background,
 
         actions: <Widget>[
@@ -111,9 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-              )
-                  .toList(),
+              ).toList(),
             ),
+
           ),
         ],
       ),
@@ -136,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Введите Email',
+
                 ),
               ),
 
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Center(
                     child: Text(
                       translation(context).login,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20
                       ),
                     ),
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () => Navigator.of(context).pushNamed('/signup'),
                 child: Text(
                   translation(context).signup,
-                  style: TextStyle(
+                  style: const TextStyle(
                     decoration: TextDecoration.underline,
                   ),
                 ),

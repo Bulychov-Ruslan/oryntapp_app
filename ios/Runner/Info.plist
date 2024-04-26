@@ -45,11 +45,17 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-        <key>NSPhotoLibraryUsageDescription</key>
-        <string>Photo Library usage</string>
-        <key>NSCameraUsageDescription</key>
-        <string>Camera usage</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>Microphone usage</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Photo Library usage</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Camera usage</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone usage</string>
+
+    <string>NSLocationWhenInUseUsageDescription</string>
+    <key>Want to display location on map, and track it.</key>
+    <string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
+    <key>Want to display location on map, and track it.</key>
 </dict>
 </plist>
