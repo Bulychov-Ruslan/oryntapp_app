@@ -13,6 +13,8 @@ import 'package:oryntapp/screens/map_screen.dart';
 import 'package:oryntapp/screens/favorites_screen.dart';
 import 'package:oryntapp/screens/account_screen.dart';
 
+import 'package:oryntapp/screens/parking.dart';
+
 import 'package:oryntapp/services/firebase_streem.dart';
 
 import 'package:oryntapp/theme/dark_theme.dart';
@@ -90,6 +92,8 @@ class _MyAppState extends State<MyApp> {
         '/signup': (context) => const SignUpScreen(),
         '/reset_password': (context) => const ResetPasswordScreen(),
         '/verify_email': (context) => const VerifyEmailScreen(),
+
+        '/parking': (context) => const ParkingScreen(),
       },
       initialRoute: '/',
     );

@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
 
-
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -15,15 +14,15 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  bool _isRouteButtonPressed = false;
+
   Location _locationController = new Location();
 
   final Completer<GoogleMapController> _mapController =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
-  static const LatLng _pGooglePlex =
-      LatLng(43.2356, 76.9297);
-  static const LatLng _pApplePark =
-      LatLng(43.2255, 76.922);
+  static const LatLng _pGooglePlex = LatLng(43.2356, 76.9297);
+  static const LatLng _pApplePark = LatLng(43.2255, 76.922);
   LatLng? _currentP = null;
 
   Map<PolylineId, Polyline> polylines = {};
@@ -31,16 +30,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    getLocationUpdates().then(
-            (_) => {
-          getPolylinePoints().then((coordinates) => {
-            generatePolyLineFromPoints(coordinates),
-              }),
-        },
-        );
+    getLocationUpdates();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,34 +41,43 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: _currentP == null
           ? const Center(
-              child: Text("Loading..."),
-            )
+        child: Text("Loading..."),
+      )
           : GoogleMap(
-              onMapCreated: ((GoogleMapController controller) =>
-                  _mapController.complete(controller)),
-              initialCameraPosition: CameraPosition(
-                target: _pGooglePlex,
-                zoom: 13,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId("_currentLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: _currentP!,
-                ),
-                Marker(
-                  markerId: MarkerId("_sourceLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: _pGooglePlex,
-                ),
-                Marker(
-                  markerId: MarkerId('_destinationLocation'),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: _pApplePark,
-                ),
-              },
-              polylines: Set<Polyline>.of(polylines.values),
+        onMapCreated: ((GoogleMapController controller) =>
+            _mapController.complete(controller)),
+        initialCameraPosition: CameraPosition(
+          target: _currentP!,
+          zoom: 13,
+        ),
+        markers: {
+          Marker(
+            markerId: MarkerId("_currentLocation"),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueAzure,
             ),
+            position: _currentP!,
+          ),
+          Marker(
+            markerId: MarkerId("_sourceLocation"),
+            icon: BitmapDescriptor.defaultMarker,
+            position: _pGooglePlex,
+            onTap: () {
+              showMarkerDialog(context, _currentP!, _pGooglePlex);
+            },
+          ),
+          Marker(
+            markerId: MarkerId('_destinationLocation'),
+            icon: BitmapDescriptor.defaultMarker,
+            position: _pApplePark,
+            onTap: () {
+              showMarkerDialog(context, _currentP!, _pApplePark);
+            },
+          ),
+        },
+        polylines: Set<Polyline>.of(polylines.values),
+        zoomControlsEnabled: true,
+      ),
     );
   }
 
@@ -97,9 +97,28 @@ class _MapScreenState extends State<MapScreen> {
     PermissionStatus _permissionGranted;
 
     _serviceEnabled = await _locationController.serviceEnabled();
-    if (_serviceEnabled) {
-      _serviceEnabled = await _locationController.requestService();
-    } else {
+    if (!_serviceEnabled) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Местоположение отключено'),
+            content: Text('Включите местоположение для использования этого приложения'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Включить местоположение'),
+                onPressed: () async {
+                  _serviceEnabled = await _locationController.requestService();
+                  if (_serviceEnabled) {
+                    Navigator.of(context).pop();
+                    getLocationUpdates();
+                  }
+                },
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
 
@@ -112,26 +131,26 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     _locationController.onLocationChanged.listen((LocationData currentLocation) {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
-        if (mounted) { // Проверяем, что виджет все еще существует
+      if (currentLocation.latitude != null && currentLocation.longitude != null) {
+        if (mounted) {
           setState(() {
-            _currentP =
-                LatLng(currentLocation.latitude!, currentLocation.longitude!);
-            _cameraToPosition(_currentP!);
+            _currentP = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+            if (_isRouteButtonPressed) {
+              _cameraToPosition(_currentP!);
+            }
           });
         }
       }
     });
   }
 
-  Future<List<LatLng>> getPolylinePoints() async {
+  Future<List<LatLng>> getPolylinePoints(LatLng start, LatLng end) async {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       'AIzaSyADgX6ekT8Y1FctQNZ9mFWuDlvTJbxU_uQ',
-      PointLatLng(_pGooglePlex.latitude, _pGooglePlex.longitude),
-      PointLatLng(_pApplePark.latitude, _pApplePark.longitude),
+      PointLatLng(start.latitude, start.longitude),
+      PointLatLng(end.latitude, end.longitude),
       travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
@@ -148,7 +167,7 @@ class _MapScreenState extends State<MapScreen> {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
       polylineId: id,
-      color: Colors.black,
+      color: Colors.blueAccent,
       points: polylineCoordinates,
       width: 3,
     );
@@ -157,4 +176,32 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  void showMarkerDialog(BuildContext context, LatLng currentP, LatLng markerP) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Выберите действие'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Посмотреть парковку'),
+              onPressed: () {
+                // Ваш код для перехода на другую страницу...
+              },
+            ),
+            TextButton(
+              child: Text('Построить маршрут'),
+              onPressed: () {
+                getPolylinePoints(currentP, markerP).then((coordinates) {
+                  generatePolyLineFromPoints(coordinates);
+                  _isRouteButtonPressed = true;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
