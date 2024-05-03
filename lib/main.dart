@@ -10,7 +10,7 @@ import 'package:oryntapp/screens/verify_email_screen.dart';
 
 import 'package:oryntapp/screens/home_screen.dart';
 import 'package:oryntapp/screens/map_screen.dart';
-import 'package:oryntapp/screens/favorites_screen.dart';
+import 'package:oryntapp/screens/list_parking_screen.dart';
 import 'package:oryntapp/screens/account_screen.dart';
 
 import 'package:oryntapp/screens/parking.dart';
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
         '/welcome': (context) => const WelcomeScreen(),
         '/home': (context) => const HomeScreen(),
         '/map': (context) => const MapScreen(),
-        '/favorites': (context) => const FavoritesScreen(),
+        '/favorites': (context) => const ParkingListScreen(),
         '/account': (context) => const AccountScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen(),

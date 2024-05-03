@@ -19,7 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   Location _locationController = new Location();
 
   final Completer<GoogleMapController> _mapController =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   static const LatLng _pGooglePlex = LatLng(43.2356, 76.9297);
   static const LatLng _pApplePark = LatLng(43.2255, 76.922);
@@ -37,47 +37,49 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Карта'),
+        title: const Text('Карта парковок'),
       ),
       body: _currentP == null
           ? const Center(
-        child: Text("Loading..."),
-      )
+              child: CircularProgressIndicator(),
+            )
           : GoogleMap(
-        onMapCreated: ((GoogleMapController controller) =>
-            _mapController.complete(controller)),
-        initialCameraPosition: CameraPosition(
-          target: _currentP!,
-          zoom: 13,
-        ),
-        markers: {
-          Marker(
-            markerId: MarkerId("_currentLocation"),
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-              BitmapDescriptor.hueAzure,
+              onMapCreated: ((GoogleMapController controller) =>
+                  _mapController.complete(controller)),
+              initialCameraPosition: CameraPosition(
+                target: _currentP!,
+                zoom: 13,
+              ),
+              markers: {
+                Marker(
+                  markerId: MarkerId("_currentLocation"),
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueAzure,
+                  ),
+                  position: _currentP!,
+                ),
+                Marker(
+                  markerId: MarkerId("sourceLocation"),
+                  icon: BitmapDescriptor.defaultMarker,
+                  position: _pGooglePlex,
+                  onTap: () {
+                    showMarkerDialog(context, _currentP!, _pGooglePlex,
+                        "1"); // ID парковки 1
+                  },
+                ),
+                Marker(
+                  markerId: MarkerId("destinationLocation"),
+                  icon: BitmapDescriptor.defaultMarker,
+                  position: _pApplePark,
+                  onTap: () {
+                    showMarkerDialog(
+                        context, _currentP!, _pApplePark, "2"); // ID парковки 2
+                  },
+                ),
+              },
+              polylines: Set<Polyline>.of(polylines.values),
+              zoomControlsEnabled: true,
             ),
-            position: _currentP!,
-          ),
-          Marker(
-            markerId: MarkerId("_sourceLocation"),
-            icon: BitmapDescriptor.defaultMarker,
-            position: _pGooglePlex,
-            onTap: () {
-              showMarkerDialog(context, _currentP!, _pGooglePlex);
-            },
-          ),
-          Marker(
-            markerId: MarkerId('_destinationLocation'),
-            icon: BitmapDescriptor.defaultMarker,
-            position: _pApplePark,
-            onTap: () {
-              showMarkerDialog(context, _currentP!, _pApplePark);
-            },
-          ),
-        },
-        polylines: Set<Polyline>.of(polylines.values),
-        zoomControlsEnabled: true,
-      ),
     );
   }
 
@@ -103,7 +105,8 @@ class _MapScreenState extends State<MapScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Местоположение отключено'),
-            content: Text('Включите местоположение для использования этого приложения'),
+            content: Text(
+                'Включите местоположение для использования этого приложения'),
             actions: <Widget>[
               TextButton(
                 child: Text('Включить местоположение'),
@@ -130,11 +133,14 @@ class _MapScreenState extends State<MapScreen> {
       }
     }
 
-    _locationController.onLocationChanged.listen((LocationData currentLocation) {
-      if (currentLocation.latitude != null && currentLocation.longitude != null) {
+    _locationController.onLocationChanged
+        .listen((LocationData currentLocation) {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
         if (mounted) {
           setState(() {
-            _currentP = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+            _currentP =
+                LatLng(currentLocation.latitude!, currentLocation.longitude!);
             if (_isRouteButtonPressed) {
               _cameraToPosition(_currentP!);
             }
@@ -176,7 +182,8 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void showMarkerDialog(BuildContext context, LatLng currentP, LatLng markerP) {
+  void showMarkerDialog(
+      BuildContext context, LatLng currentP, LatLng markerP, String parkingId) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -186,7 +193,8 @@ class _MapScreenState extends State<MapScreen> {
             TextButton(
               child: Text('Посмотреть парковку'),
               onPressed: () {
-                // Ваш код для перехода на другую страницу...
+                Navigator.of(context)
+                    .pushNamed('/parking', arguments: parkingId);
               },
             ),
             TextButton(
