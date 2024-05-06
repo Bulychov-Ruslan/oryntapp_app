@@ -25,12 +25,24 @@ class _MapScreenState extends State<MapScreen> {
   static const LatLng _pApplePark = LatLng(43.2255, 76.922);
   LatLng? _currentP = null;
 
+  BitmapDescriptor? _userLocationIcon;
+  BitmapDescriptor? _parkingIcon;
+
   Map<PolylineId, Polyline> polylines = {};
 
   @override
   void initState() {
     super.initState();
-    getLocationUpdates();
+    _loadCustomIcons().then((_) {
+      getLocationUpdates();
+    });
+  }
+
+  Future<void> _loadCustomIcons() async {
+    _userLocationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'assets/images/user_location_icon.png');
+    _parkingIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'assets/images/parking_icon.png');
   }
 
   @override
@@ -38,6 +50,14 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Карта парковок'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              getLocationUpdates();
+            },
+          ),
+        ],
       ),
       body: _currentP == null
           ? const Center(
@@ -48,19 +68,17 @@ class _MapScreenState extends State<MapScreen> {
                   _mapController.complete(controller)),
               initialCameraPosition: CameraPosition(
                 target: _currentP!,
-                zoom: 13,
+                zoom: 12.2,
               ),
               markers: {
                 Marker(
                   markerId: MarkerId("_currentLocation"),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueAzure,
-                  ),
+                  icon: _userLocationIcon ?? BitmapDescriptor.defaultMarker,
                   position: _currentP!,
                 ),
                 Marker(
                   markerId: MarkerId("sourceLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
+                  icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
                   position: _pGooglePlex,
                   onTap: () {
                     showMarkerDialog(context, _currentP!, _pGooglePlex,
@@ -69,7 +87,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 Marker(
                   markerId: MarkerId("destinationLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
+                  icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
                   position: _pApplePark,
                   onTap: () {
                     showMarkerDialog(
