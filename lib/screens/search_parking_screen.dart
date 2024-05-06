@@ -3,14 +3,16 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-class ParkingListScreen extends StatefulWidget {
-  const ParkingListScreen({super.key});
+import 'package:oryntapp/language/language_constants.dart';
+
+class SearchParkingScreen extends StatefulWidget {
+  const SearchParkingScreen({super.key});
 
   @override
-  _ParkingListScreenState createState() => _ParkingListScreenState();
+  _SearchParkingScreenState createState() => _SearchParkingScreenState();
 }
 
-class _ParkingListScreenState extends State<ParkingListScreen> {
+class _SearchParkingScreenState extends State<SearchParkingScreen> {
   late List<Map<String, dynamic>> originalParkingList;
   List<Map<String, dynamic>> parkingList = [];
   TextEditingController searchController = TextEditingController();
@@ -25,7 +27,8 @@ class _ParkingListScreenState extends State<ParkingListScreen> {
     try {
       // var url = 'http://10.0.2.2:5000/parkings'; // Для Эмулятора
       // var url = 'http://192.168.68.137:5000/parkings/'; // Для Мобильного устройства с мобильным интернетом
-      var url = 'http://192.168.0.13:5000/parkings'; // Для Мобильного устройства с Wi-Fi Batys_5G
+      var url =
+          'http://192.168.0.13:5000/parkings'; // Для Мобильного устройства с Wi-Fi Batys_5G
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -65,7 +68,7 @@ class _ParkingListScreenState extends State<ParkingListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Список парковок'),
+        title: Text(translation(context).listParking),
       ),
       body: Column(
         children: [
@@ -75,8 +78,8 @@ class _ParkingListScreenState extends State<ParkingListScreen> {
               controller: searchController,
               onChanged: searchParking,
               decoration: InputDecoration(
-                labelText: 'Поиск по адресу',
-                prefixIcon: Icon(Icons.search),
+                labelText: translation(context).searchByAddress,
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -97,16 +100,16 @@ class _ParkingListScreenState extends State<ParkingListScreen> {
                         child: Card(
                           elevation: 2,
                           child: ListTile(
-                            leading: Icon(Icons.local_parking,
+                            leading: const Icon(Icons.local_parking,
                                 size: 48, color: Colors.blue),
                             title: Text(
-                              'Парковка №${parkingList[index]['id']}',
-                              style: TextStyle(
+                              '${translation(context).parkingId} ${parkingList[index]['id']}',
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
-                              'Адрес: ${parkingList[index]['address']}',
-                              style: TextStyle(fontSize: 16),
+                              '${translation(context).address} ${parkingList[index]['address']}',
+                              style: const TextStyle(fontSize: 16),
                             ),
                             onTap: () {
                               final parkingId = parkingList[index]['id'];

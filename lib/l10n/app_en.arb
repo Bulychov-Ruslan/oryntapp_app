@@ -1,7 +1,67 @@
 {
+  "welcome": "Welcome to OrynTapp!",
+  "welcomeText1": "Park your car with ease",
+  "welcomeText2": "To use the application, you need to login or register.",
+
   "login": "Login",
   "signup": "Sign Up",
   "resetPassword": "Reset Password",
+
+  "enterEmail": "Enter your Email",
+  "password": "Password",
+  "enterPassword": "Enter your password",
+  "repeatPassword": "Repeat Password",
+  "enterRepeatPassword": "Repeat your password",
+
+  "inCorrectEmailOrPasswordTryAgain": "Incorrect email or password. Try again.",
+  "unknownErrorTryAgainOrContactSupport": "Unknown error. Try again or contact support.",
+  "enterCorrectEmail": "Enter correct email",
+  "minimum6Characters": "Minimum 6 characters",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "emailAlreadyExists": "This Email is already in use, try again using a different Email",
+  "thisEmailIsNotRegistered": "This Email is not registered",
+  "passwordResetEmailSent": "Password reset email sent",
+
+  "emailAddressVerification": "Email Address Verification",
+  "emailVerificationSent": "Email verification sent",
+  "resendVerificationEmail": "Resend Verification",
+
+  "parkings": "Parkings",
+  "search": "Search",
+  "profile": "Profile",
+
+  "parkingMap": "Parking Map",
+  "locationDisabled": "Location is disabled",
+  "enableLocationToUseThisApp": "Enable location to use this app",
+  "enableLocation": "Enable Location",
+  "chooseAnAction": "Choose an action",
+  "viewParking": "View Parking",
+  "buildARoute": "Build a Route",
+
+  "listParking": "List of parking lots",
+  "searchByAddress": "Search by address",
+  "parkingId": "Parking No.",
+  "address": "Address:",
+
+
+  "selectLanguage": "Select Language",
+  "username": "Username",
+  "editUsername": "Edit Username",
+  "cancel": "Cancel",
+  "save": "Save",
+  "deletePhoto": "Delete Photo?",
+  "areYouSureYouWantToDeleteYourProfilePhoto": "Are you sure you want to delete your profile photo?",
+  "delete": "Delete",
+
+  "parkingPlaces": "Parking Places",
+  "freeSeats": "Free Seats",
+  "occupiedPlaces": "Occupied Places",
+  "filter": "Filter:",
+  "allPlaces": "All places",
+  "free": "Free",
+  "occupied": "Occupied",
+  "row": "Row",
+
 
   "account": "Account"
 }

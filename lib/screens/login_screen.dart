@@ -1,12 +1,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:oryntapp/main.dart';
 import 'package:oryntapp/services/snack_bar.dart';
 
 import 'package:oryntapp/language/language.dart';
 import 'package:oryntapp/language/language_constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -54,14 +54,14 @@ class _LoginScreenState extends State<LoginScreen> {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         SnackBarService.showSnackBar(
           context,
-          'Неправильный email или пароль. Повторите попытку',
+          translation(context).inCorrectEmailOrPasswordTryAgain,
           true,
         );
         return;
       } else {
         SnackBarService.showSnackBar(
           context,
-          'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.',
+          translation(context).unknownErrorTryAgainOrContactSupport,
           true,
         );
         return;
@@ -74,13 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
-
       appBar: AppBar(
         title: Text(translation(context).login),
-        // backgroundColor: Theme.of(context).colorScheme.background,
-
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -125,18 +121,21 @@ class _LoginScreenState extends State<LoginScreen> {
           key: formKey,
           child: Column(
             children: [
+
+
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
                 controller: emailTextInputController,
                 validator: (email) =>
-                    email != null && !EmailValidator.validate(email)
-                        ? 'Введите правильный Email'
-                        : null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Введите Email',
-
+                email != null && !EmailValidator.validate(email)
+                    ? translation(context).enterCorrectEmail
+                    : null,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Email',
+                  prefixIcon: const Icon(Icons.email),
+                  hintText: translation(context).enterEmail,
                 ),
               ),
 
@@ -147,19 +146,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: passwordTextInputController,
                 obscureText: isHiddenPassword,
                 validator: (value) => value != null && value.length < 6
-                    ? 'Минимум 6 символов'
+                    ? translation(context).minimum6Characters
                     : null,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Введите пароль',
-                  suffix: InkWell(
+                  labelText: translation(context).password,
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: translation(context).enterPassword,
+                  suffixIcon: InkWell(
                     onTap: togglePasswordView,
                     child: Icon(
-                      isHiddenPassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: Colors.black,
+                      isHiddenPassword ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -169,17 +168,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
               ElevatedButton(
                 onPressed: login,
-                child: Center(
-                    child: Text(
-                      translation(context).login,
-                      style: const TextStyle(
-                          fontSize: 20
-                      ),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  translation(context).login,
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
 
               const SizedBox(height: 10),
+
 
               TextButton(
                 onPressed: () => Navigator.of(context).pushNamed('/signup'),
@@ -187,6 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   translation(context).signup,
                   style: const TextStyle(
                     decoration: TextDecoration.underline,
+                    color: Colors.blueGrey,
+                    fontSize: 20,
                   ),
                 ),
               ),
@@ -194,7 +200,14 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed('/reset_password'),
-                child: Text(translation(context).resetPassword),
+                child: Text(
+                  translation(context).resetPassword,
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.blueGrey,
+                    fontSize: 16,
+                  ),
+              ),
               ),
 
             ],

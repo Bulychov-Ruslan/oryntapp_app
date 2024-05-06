@@ -9,20 +9,19 @@ import 'package:oryntapp/screens/signup_screen.dart';
 import 'package:oryntapp/screens/verify_email_screen.dart';
 
 import 'package:oryntapp/screens/home_screen.dart';
-import 'package:oryntapp/screens/map_screen.dart';
-import 'package:oryntapp/screens/list_parking_screen.dart';
+import 'package:oryntapp/screens/map_parking_screen.dart';
+import 'package:oryntapp/screens/search_parking_screen.dart';
 import 'package:oryntapp/screens/account_screen.dart';
 
 import 'package:oryntapp/screens/parking.dart';
 
 import 'package:oryntapp/services/firebase_streem.dart';
 
-import 'package:oryntapp/theme/dark_theme.dart';
-import 'package:oryntapp/theme/light_theme.dart';
+// import 'package:oryntapp/theme/dark_theme.dart';
+// import 'package:oryntapp/theme/light_theme.dart';
 
 import 'firebase_options.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oryntapp/language/language_constants.dart';
 
@@ -85,8 +84,8 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => const FirebaseStream(),
         '/welcome': (context) => const WelcomeScreen(),
         '/home': (context) => const HomeScreen(),
-        '/map': (context) => const MapScreen(),
-        '/favorites': (context) => const ParkingListScreen(),
+        '/map': (context) => const MapParkingScreen(),
+        '/favorites': (context) => const SearchParkingScreen(),
         '/account': (context) => const AccountScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen(),

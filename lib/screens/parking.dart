@@ -539,6 +539,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:oryntapp/language/language_constants.dart';
+
 enum FilterType { all, free, occupied }
 
 class ParkingScreen extends StatefulWidget {
@@ -616,20 +618,18 @@ class _ParkingScreenState extends State<ParkingScreen> {
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        title: Text('Парковочные места'),
+        title: Text(translation(context).parkingPlaces),
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Адрес: $parkingAddress',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              '${translation(context).address} $parkingAddress',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-
-          SizedBox(height: 10,),
 
           Padding(
             padding: const EdgeInsets.only(
@@ -638,9 +638,9 @@ class _ParkingScreenState extends State<ParkingScreen> {
             ),
             child: Card(
               child: ListTile(
-                leading: Icon(Icons.local_parking, color: Colors.blue),
-                title: Text('Свободных мест'),
-                trailing: Text('$freeSpaces', style: TextStyle(fontSize: 16)),
+                leading: const Icon(Icons.local_parking,),
+                title: Text(translation(context).freeSeats),
+                trailing: Text('$freeSpaces', style: const TextStyle(fontSize: 16)),
               ),
             ),
           ),
@@ -651,30 +651,29 @@ class _ParkingScreenState extends State<ParkingScreen> {
             ),
             child: Card(
               child: ListTile(
-                leading: Icon(Icons.directions_car, color: Colors.red),
-                title: Text('Занятых мест'),
-                trailing: Text('$occupiedSpaces', style: TextStyle(fontSize: 16)),
+                leading: const Icon(Icons.directions_car,),
+                title: Text(translation(context).occupiedPlaces),
+                trailing: Text('$occupiedSpaces', style: const TextStyle(fontSize: 16)),
               ),
             ),
           ),
 
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
 
-          Text('Фильтр:'),
+          Text(translation(context).filter),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
-                  child: Text('Все места', style: TextStyle(color: Colors.white),),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
                         if (filterType == FilterType.all)
-                          return Colors.blue; // Use the component's default.
-                        return Colors.grey; // Use the component's default.
+                          return Colors.blue;
+                        return Colors.grey;
                       },
                     ),
                   ),
@@ -683,16 +682,16 @@ class _ParkingScreenState extends State<ParkingScreen> {
                       filterType = FilterType.all;
                     });
                   },
+                  child: Text(translation(context).allPlaces, style: TextStyle(color: Colors.white),),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
-                  child: Text('Свободные', style: TextStyle(color: Colors.white),),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
                         if (filterType == FilterType.free)
-                          return Colors.blue; // Use the component's default.
-                        return Colors.grey; // Use the component's default.
+                          return Colors.blue;
+                        return Colors.grey;
                       },
                     ),
                   ),
@@ -701,16 +700,16 @@ class _ParkingScreenState extends State<ParkingScreen> {
                       filterType = FilterType.free;
                     });
                   },
+                  child: Text(translation(context).free, style: const TextStyle(color: Colors.white),),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
-                  child: Text('Занятые', style: TextStyle(color: Colors.white),),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
                         if (filterType == FilterType.occupied)
-                          return Colors.blue; // Use the component's default.
-                        return Colors.grey; // Use the component's default.
+                          return Colors.blue;
+                        return Colors.grey;
                       },
                     ),
                   ),
@@ -719,13 +718,14 @@ class _ParkingScreenState extends State<ParkingScreen> {
                       filterType = FilterType.occupied;
                     });
                   },
+                  child: Text(translation(context).occupied, style: TextStyle(color: Colors.white),),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
               ],
             ),
           ),
 
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
 
           Expanded(
             child: ListView(
@@ -734,8 +734,8 @@ class _ParkingScreenState extends State<ParkingScreen> {
                     (rowIndex) {
                   return Column(
                     children: [
-                      Text('Ряд ${rowIndex + 1}',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text('${translation(context).row} ${rowIndex + 1}',
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -747,7 +747,6 @@ class _ParkingScreenState extends State<ParkingScreen> {
                               } else if (filterType == FilterType.occupied && !parkingStatus[rowIndex][index]) {
                                 return Container(); // Empty container for free spaces when filter is 'occupied'
                               }
-                              // Преобразование одномерного индекса в двумерный
                               int flatIndex = rowIndex * parkingStatus[rowIndex].length + index;
                               flatIndex += 1;
                               return Card(
@@ -768,11 +767,11 @@ class _ParkingScreenState extends State<ParkingScreen> {
                                           ? Icon(Icons.directions_car, color: Colors.white, size: 50.0)
                                           : Icon(Icons.local_parking, color: Colors.white, size: 50.0),
 
-                                      SizedBox(height: 20),
+                                      const SizedBox(height: 20),
 
                                       Text(
                                         '$flatIndex',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -786,7 +785,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,)
+                      const SizedBox(height: 20,)
                     ],
                   );
                 },
@@ -807,7 +806,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
             }
           });
         },
-        child: Icon(Icons.filter_list),
+        child: const Icon(Icons.filter_list),
       ),
     );
   }

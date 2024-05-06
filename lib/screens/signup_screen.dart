@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:oryntapp/services/snack_bar.dart';
+
+import 'package:oryntapp/language/language.dart';
+import 'package:oryntapp/language/language_constants.dart';
+
+import '../main.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -45,7 +50,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         passwordTextRepeatInputController.text) {
       SnackBarService.showSnackBar(
         context,
-        'Пароли должны совпадать',
+        translation(context).passwordsDoNotMatch,
         true,
       );
       return;
@@ -71,14 +76,14 @@ class _SignUpScreen extends State<SignUpScreen> {
       if (e.code == 'email-already-in-use') {
         SnackBarService.showSnackBar(
           context,
-          'Такой Email уже используется, повторите попытку с использованием другого Email',
+          translation(context).emailAlreadyExists,
           true,
         );
         return;
       } else {
         SnackBarService.showSnackBar(
           context,
-          'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.',
+          translation(context).unknownErrorTryAgainOrContactSupport,
           true,
         );
       }
@@ -90,12 +95,42 @@ class _SignUpScreen extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
-
       appBar: AppBar(
-        title: const Text('Зарегистрироваться'),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(translation(context).signup),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList()
+                  .map<DropdownMenuItem<Language>>(
+                    (e) => DropdownMenuItem<Language>(
+                  value: e,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        e.flag,
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      Text(e.name)
+                    ],
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+        ],
       ),
 
       body: Padding(
@@ -111,11 +146,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                 controller: emailTextInputController,
                 validator: (email) =>
                     email != null && !EmailValidator.validate(email)
-                        ? 'Введите правильный Email'
+                        ? translation(context).enterCorrectEmail
                         : null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Введите Email',
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Email',
+                  prefixIcon: const Icon(Icons.email),
+                  hintText: translation(context).enterEmail,
                 ),
               ),
 
@@ -127,11 +164,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                 obscureText: isHiddenPassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => value != null && value.length < 6
-                    ? 'Минимум 6 символов'
+                    ? translation(context).minimum6Characters
                     : null,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Введите пароль',
+                  labelText: translation(context).password,
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: translation(context).enterPassword,
                   suffix: InkWell(
                     onTap: togglePasswordView,
                     child: Icon(
@@ -152,11 +191,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                 obscureText: isHiddenPassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => value != null && value.length < 6
-                    ? 'Минимум 6 символов'
+                    ? translation(context).minimum6Characters
                     : null,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: 'Введите пароль еще раз',
+                  labelText: translation(context).repeatPassword,
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: translation(context).enterRepeatPassword,
                   suffix: InkWell(
                     onTap: togglePasswordView,
                     child: Icon(
@@ -173,13 +214,17 @@ class _SignUpScreen extends State<SignUpScreen> {
 
               ElevatedButton(
                 onPressed: signUp,
-                child: const Center(
-                    child: Text(
-                        'Регистрация',
-                        style: TextStyle(
-                            fontSize: 20,
-                        ),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 85, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  translation(context).signup,
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
 
@@ -187,10 +232,12 @@ class _SignUpScreen extends State<SignUpScreen> {
 
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'Войти',
-                  style: TextStyle(
+                child: Text(
+                  translation(context).login,
+                  style: const TextStyle(
                     decoration: TextDecoration.underline,
+                    color: Colors.blueGrey,
+                    fontSize: 18,
                   ),
                 ),
               ),

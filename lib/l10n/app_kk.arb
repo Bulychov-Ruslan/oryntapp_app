@@ -1,7 +1,66 @@
 {
+  "welcome": "OrynTapp қолданбасына қош келдіңіз!",
+  "welcomeText1": "Көлігіңізді оңай тұраққа қойыңыз",
+  "welcomeText2": "Қолданбаны пайдалану үшін жүйеге кіру немесе тіркелу қажет.",
+
   "login": "Кіру",
   "signup": "Тіркелу",
   "resetPassword": "Құпия сөзді қалпына келтіру",
 
-  "account": "Жеке аккаунт"
+  "enterEmail": "Email поштаңызды енгізіңіз",
+  "password": "Құпия сөз",
+  "enterPassword": "Құпия сөзді енгізіңіз",
+  "repeatPassword": "Құпия сөзді қайталаңыз",
+  "enterRepeatPassword": "Құпия сөзді қайта енгізіңіз",
+
+  "inCorrectEmailOrPasswordTryAgain": "Email немесе құпия сөз дұрыс емес. Қайталап көріңіз",
+  "unknownErrorTryAgainOrContactSupport": "Белгісіз қате! Қайталап көріңіз немесе техникалық қолдау қызметіне хабарласыңыз.",
+  "enterCorrectEmail": "Дұрыс Email енгізіңіз",
+  "minimum6Characters": "Минимум 6 символ",
+  "passwordsDoNotMatch": "Құпия сөздер сәйкес келмейді",
+  "emailAlreadyExists": "Бұл Email бұрыннан қолданыста, басқа Email арқылы әрекетті қайталаңыз",
+  "thisEmailIsNotRegistered": "Бұл Email тіркелмеген!",
+  "passwordResetEmailSent": "Құпия сөзді қалпына келтіру поштаңызға жіберілді",
+
+  "emailAddressVerification": "Email мекенжайын растау",
+  "emailVerificationSent": "Email мекенжайын растау хатты поштаңызға жіберілді",
+  "resendVerificationEmail": "Қайта жіберу",
+
+  "parkings": "Автотұрақтар",
+  "search": "Іздеу",
+  "profile": "Профиль",
+
+  "parkingMap": "Автотұрақтар картасы",
+  "locationDisabled": "Орналасу орны қосылмаған",
+  "enableLocationToUseThisApp": "Бұл қолданбаны пайдалану үшін орналасу орнын қосыңыз",
+  "enableLocation": "Орналасу орнын қосу",
+  "chooseAnAction": "Әрекетті таңдаңыз",
+  "viewParking": "Автотұрақты көру",
+  "buildARoute": "Маршрут құру",
+
+  "listParking": "Автотұрақтар тізімі",
+  "searchByAddress": "Мекенжай бойынша іздеу",
+  "parkingId": "Автотұрақ №",
+  "address": "Мекенжай:",
+
+
+  "selectLanguage": "Тілді таңдаңыз",
+  "username": "Қолданушының аты",
+  "editUsername": "Қолданушының атын өзгерту",
+  "cancel": "Болдырмау",
+  "save": "Сақтау",
+  "deletePhoto": "Фотосуретті жою керек пе?",
+  "areYouSureYouWantToDeleteYourProfilePhoto": "Профиль фотосуретіңізді шынымен жойғыңыз келе ме?",
+  "delete": "Жою",
+
+  "parkingPlaces": "Автотұрақ орындары",
+  "freeSeats": "Бос орындар",
+  "occupiedPlaces": "Бос емес орындар",
+  "filter": "Фильтр:",
+  "allPlaces": "Барлық орындар",
+  "free": "Бос",
+  "occupied": "Бос емес",
+  "row": "Қатар",
+
+  "account": "Account"
 }

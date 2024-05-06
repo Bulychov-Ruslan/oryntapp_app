@@ -1,8 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
-import 'package:oryntapp/components/text_box.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,7 +16,7 @@ import '../main.dart';
 
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+  const AccountScreen({super.key});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -44,16 +41,16 @@ class _AccountScreenState extends State<AccountScreen> {
       builder: (context) => AlertDialog(
         backgroundColor: Colors.grey[900],
         title: Text(
-          'Edit $field',
+          translation(context).editUsername,
           style: const TextStyle(color: Colors.white),
         ),
         content: TextField(
           autofocus: true,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
 
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
             newValue = value;
@@ -61,10 +58,10 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
         actions: [
           TextButton(
-              child: Text('Cancel', style: TextStyle(color: Colors.white)),
+              child: Text(translation(context).cancel, style: const TextStyle(color: Colors.white)),
               onPressed: () => Navigator.pop(context)),
           TextButton(
-              child: Text('Save', style: TextStyle(color: Colors.white)),
+              child: Text(translation(context).save, style: const TextStyle(color: Colors.white)),
               onPressed: () {
                 Navigator.of(context).pop(newValue);
               }),
@@ -109,29 +106,28 @@ class _AccountScreenState extends State<AccountScreen> {
       await photoRef.delete();
     }
 
-    // Удаление URL фотографии профиля из Firestore
     await userCollection
         .doc(currentUser?.email)
-        .update({'profile_photo': null}); // или другое значение
+        .update({'profile_photo': null});
   }
 
   Future<void> _deletePhotoDialog() async {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Удалить фото?'),
-        content: Text('Вы уверены, что хотите удалить фото профиля?'),
+        title: Text(translation(context).deletePhoto),
+        content: Text(translation(context).areYouSureYouWantToDeleteYourProfilePhoto),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Отмена'),
+            child: Text(translation(context).cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               _deletePhoto();
             },
-            child: Text('Удалить'),
+            child: Text(translation(context).delete),
           ),
         ],
       ),
@@ -173,11 +169,10 @@ class _AccountScreenState extends State<AccountScreen> {
       backgroundColor: Theme.of(context).colorScheme.background,
 
       appBar: AppBar(
-        title: Text(translation(context).account),
+        title: Text(translation(context).profile),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            tooltip: 'Open shopping cart',
             onPressed: () => signOut(),
           ),
         ],
@@ -198,7 +193,6 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: CircleAvatar(
                       radius: 64,
                       backgroundImage: NetworkImage(userData['profile_photo']),
-                      // Оберните изображение в InkWell для обработки нажатия
                       child: InkWell(
                         onTap: () {
                           _showFullScreenImage(userData['profile_photo']);
@@ -245,7 +239,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 MyTextBox(
                   text: userData['username'],
-                  sectionName: 'username',
+                  sectionName: translation(context).username,
                   onPressed: () => editField('username'),
                 ),
 
@@ -254,7 +248,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Center(
                     child: DropdownButton<Language>(
                       iconSize: 30,
-                      hint: const Text('Select Language'),
+                      hint: Text(translation(context).selectLanguage),
                       onChanged: (Language? language) async {
                         if (language != null) {
                           Locale _locale = await setLocale(language.languageCode);
@@ -294,6 +288,58 @@ class _AccountScreenState extends State<AccountScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+
+
+class MyTextBox extends StatelessWidget {
+  final String text;
+  final String sectionName;
+  final void Function()? onPressed;
+
+  const MyTextBox({
+    super.key,
+    required this.text,
+    required this.sectionName,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: const EdgeInsets.only(
+        bottom: 15,
+        left: 15,
+      ),
+      margin: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 10,
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(
+            sectionName,
+            style: TextStyle(
+              color: Colors.grey[500],
+            ),
+          ),
+          IconButton(
+            onPressed: onPressed,
+            icon: Icon(
+              Icons.settings,
+              color: Colors.grey[400],
+            ),
+          ),
+        ]),
+        Text(text),
+      ]),
     );
   }
 }

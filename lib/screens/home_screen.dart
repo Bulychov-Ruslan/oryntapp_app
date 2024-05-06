@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:oryntapp/screens/map_screen.dart';
-import 'package:oryntapp/screens/list_parking_screen.dart';
+import 'package:oryntapp/language/language_constants.dart';
+import 'package:oryntapp/screens/map_parking_screen.dart';
+import 'package:oryntapp/screens/search_parking_screen.dart';
 import 'package:oryntapp/screens/account_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,8 +15,8 @@ class _MyHomePageState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = [
-    const MapScreen(),
-    const ParkingListScreen(),
+    const MapParkingScreen(),
+    const SearchParkingScreen(),
     const AccountScreen(),
   ];
 
@@ -28,32 +28,30 @@ class _MyHomePageState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        // backgroundColor: Colors.indigo,
-        // selectedItemColor: Colors.amber,
-        // unselectedItemColor: Colors.white,
+        backgroundColor: Colors.white.withOpacity(0.8),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey.shade600,
         iconSize: 33,
         selectedFontSize: 16,
         unselectedFontSize: 14,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.place),
-            label: 'Parking',
+            icon: const Icon(Icons.place),
+            label: translation(context).parkings,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'List',
+            icon: const Icon(Icons.search),
+            label: translation(context).search,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person),
+            label: translation(context).profile,
           ),
         ],
         currentIndex: _selectedIndex,

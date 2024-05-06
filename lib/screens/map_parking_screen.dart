@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
+import 'package:oryntapp/language/language_constants.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+class MapParkingScreen extends StatefulWidget {
+  const MapParkingScreen({super.key});
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapParkingScreen> createState() => _MapParkingScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapParkingScreenState extends State<MapParkingScreen> {
   bool _isRouteButtonPressed = false;
 
   Location _locationController = new Location();
@@ -49,10 +50,10 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Карта парковок'),
+        title: Text(translation(context).parkingMap),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: () {
               getLocationUpdates();
             },
@@ -122,12 +123,13 @@ class _MapScreenState extends State<MapScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Местоположение отключено'),
+            title: Text(translation(context).locationDisabled),
             content: Text(
-                'Включите местоположение для использования этого приложения'),
+              translation(context).enableLocationToUseThisApp,
+            ),
             actions: <Widget>[
               TextButton(
-                child: Text('Включить местоположение'),
+                child: Text(translation(context).enableLocation),
                 onPressed: () async {
                   _serviceEnabled = await _locationController.requestService();
                   if (_serviceEnabled) {
@@ -206,25 +208,29 @@ class _MapScreenState extends State<MapScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Выберите действие'),
+          title: Text(translation(context).chooseAnAction),
           actions: <Widget>[
-            TextButton(
-              child: Text('Посмотреть парковку'),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed('/parking', arguments: parkingId);
-              },
-            ),
-            TextButton(
-              child: Text('Построить маршрут'),
-              onPressed: () {
-                getPolylinePoints(currentP, markerP).then((coordinates) {
-                  generatePolyLineFromPoints(coordinates);
-                  _isRouteButtonPressed = true;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
+            Column(
+              children: <Widget>[
+                TextButton(
+                child: Text(translation(context).viewParking),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed('/parking', arguments: parkingId);
+                },
+              ),
+                TextButton(
+                  child: Text(translation(context).buildARoute),
+                  onPressed: () {
+                    getPolylinePoints(currentP, markerP).then((coordinates) {
+                      generatePolyLineFromPoints(coordinates);
+                      _isRouteButtonPressed = true;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            )
           ],
         );
       },

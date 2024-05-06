@@ -1,7 +1,66 @@
 {
+  "welcome": "Добро пожаловать в OrynTapp!",
+  "welcomeText1": "Припаркуй машину с легкостью",
+  "welcomeText2": "Чтобы использовать приложение, вам нужно войти или зарегистрироваться.",
+
   "login": "Войти",
-  "signup": "Зарегистрироваться",
+  "signup": "Регистрация",
   "resetPassword": "Сбросить пароль",
 
-  "account": "Аккаунт"
+  "enterEmail": "Введите ваш Email",
+  "password": "Пароль",
+  "enterPassword": "Введите ваш пароль",
+  "repeatPassword": "Повторите пароль",
+  "enterRepeatPassword": "Повторите ваш пароль",
+
+  "inCorrectEmailOrPasswordTryAgain": "Неверный Email или пароль. Попробуйте еще раз",
+  "unknownErrorTryAgainOrContactSupport": "Неизвестная ошибка! Попробуйте еще раз или обратитесь в техническую поддержку.",
+  "enterCorrectEmail": "Введите корректный Email",
+  "minimum6Characters": "Минимум 6 символов",
+  "passwordsDoNotMatch": "Пароли не совпадают",
+  "emailAlreadyExists": "Такой Email уже используется, повторите попытку с использованием другого Email",
+  "thisEmailIsNotRegistered": "Этот Email не зарегистрирован",
+  "passwordResetEmailSent": "Письмо для сброса пароля отправлено на ваш Email",
+
+  "emailAddressVerification": "Подтверждение Email адреса",
+  "emailVerificationSent": "Письмо для подтверждения отправлено на ваш Email",
+  "resendVerificationEmail": "Повторно отправить",
+
+  "parkings": "Парковки",
+  "search": "Поиск",
+  "profile": "Профиль",
+
+  "parkingMap": "Карта парковок",
+  "locationDisabled": "Местоположение отключено",
+  "enableLocationToUseThisApp": "Включите местоположение для использования этого приложения",
+  "enableLocation": "Включить местоположение",
+  "chooseAnAction": "Выберите действие",
+  "viewParking": "Посмотреть парковку",
+  "buildARoute": "Построить маршрут",
+
+  "listParking": "Список парковок",
+  "searchByAddress": "Поиск по адресу",
+  "parkingId": "Парковка №",
+  "address": "Адрес:",
+
+
+  "selectLanguage": "Выберите язык",
+  "username": "Имя пользователя",
+  "editUsername": "Изменить имя пользователя",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "deletePhoto": "Удалить фото?",
+  "areYouSureYouWantToDeleteYourProfilePhoto": "Вы уверены, что хотите удалить фото профиля?",
+  "delete": "Удалить",
+
+  "parkingPlaces": "Места парковки",
+  "freeSeats": "Свободные места",
+  "occupiedPlaces": "Занятые места",
+  "filter": "Фильтр:",
+  "allPlaces": "Все места",
+  "free": "Свободные",
+  "occupied": "Занятые",
+  "row": "Ряд",
+
+  "account": "Account"
 }

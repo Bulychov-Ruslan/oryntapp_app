@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oryntapp/language/language_constants.dart';
 import 'package:oryntapp/screens/home_screen.dart';
 import 'package:oryntapp/services/snack_bar.dart';
 
@@ -78,45 +79,56 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       : Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text('Верификация Email адреса'),
+            title: Text(translation(context).emailAddressVerification),
           ),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Письмо с подтверждением было отправлено на вашу электронную почту.',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
+              child: Center(
+                child: Column(
 
-                  const SizedBox(height: 20),
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                  ElevatedButton.icon(
-                    onPressed: canResendEmail ? sendVerificationEmail : null,
-                    icon: const Icon(Icons.email),
-                    label: const Text('Повторно отправить'),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  TextButton(
-                    onPressed: () async {
-                      timer?.cancel();
-                      await FirebaseAuth.instance.currentUser!.delete();
-                    },
-                    child: const Text(
-                      'Отменить',
-                      style: TextStyle(
-                        color: Colors.blue,
+                  children: [
+                    Text(
+                      translation(context).emailVerificationSent,
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
                     ),
-                  )
 
-                ],
+                    const SizedBox(height: 20),
+
+                    ElevatedButton.icon(
+                      onPressed: canResendEmail ? sendVerificationEmail : null,
+                      icon: const Icon(Icons.email),
+                      label: Text(
+                        translation(context).resendVerificationEmail,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                      ),
+
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    TextButton(
+                      onPressed: () async {
+                        timer?.cancel();
+                        await FirebaseAuth.instance.currentUser!.delete();
+                      },
+                      child: Text(
+                        translation(context).cancel,
+                        style: const TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
               ),
             ),
           ),
