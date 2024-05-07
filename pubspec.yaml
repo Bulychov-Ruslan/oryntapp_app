@@ -56,8 +56,14 @@ dependencies:
   http: ^1.2.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/oryntapp_ic.webp"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -84,6 +90,8 @@ flutter:
      - assets/images/default_photo.jpg
      - assets/images/user_location_icon.png
      - assets/images/parking_icon.png
+     - assets/
+     - assets/icons/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
