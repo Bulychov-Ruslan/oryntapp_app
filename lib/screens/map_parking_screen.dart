@@ -22,8 +22,12 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
   final Completer<GoogleMapController> _mapController =
       Completer<GoogleMapController>();
 
-  static const LatLng _pGooglePlex = LatLng(43.2356, 76.9297);
-  static const LatLng _pApplePark = LatLng(43.2255, 76.922);
+  static const LatLng _pBaitursynov1 = LatLng(43.2389, 76.9279);
+  static const LatLng _pBaitursynov2 = LatLng(43.2402, 76.9277);
+  static const LatLng _pKazNu = LatLng(43.2262, 76.9213);
+  static const LatLng _pSatbayevGuk = LatLng(43.2368, 76.9303);
+  static const LatLng _pSatbayevGMK = LatLng(43.2365, 76.9306);
+
   LatLng? _currentP = null;
 
   BitmapDescriptor? _userLocationIcon;
@@ -78,21 +82,48 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
                   position: _currentP!,
                 ),
                 Marker(
-                  markerId: MarkerId("sourceLocation"),
+                  markerId: MarkerId("ParkingLocation1"),
                   icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
-                  position: _pGooglePlex,
+                  position: _pBaitursynov1,
                   onTap: () {
-                    showMarkerDialog(context, _currentP!, _pGooglePlex,
-                        "1"); // ID парковки 1
+                    showMarkerDialog(context, _currentP!, _pBaitursynov1,
+                        "1");
                   },
                 ),
                 Marker(
-                  markerId: MarkerId("destinationLocation"),
+                  markerId: MarkerId("ParkingLocation2"),
                   icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
-                  position: _pApplePark,
+                  position: _pBaitursynov2,
                   onTap: () {
                     showMarkerDialog(
-                        context, _currentP!, _pApplePark, "2"); // ID парковки 2
+                        context, _currentP!, _pBaitursynov2, "2");
+                  },
+                ),
+                Marker(
+                  markerId: MarkerId("ParkingLocation3"),
+                  icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
+                  position: _pKazNu,
+                  onTap: () {
+                    showMarkerDialog(
+                        context, _currentP!, _pKazNu, "3");
+                  },
+                ),
+                Marker(
+                  markerId: MarkerId("ParkingLocation4"),
+                  icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
+                  position: _pSatbayevGuk,
+                  onTap: () {
+                    showMarkerDialog(
+                        context, _currentP!, _pSatbayevGuk, "4");
+                  },
+                ),
+                Marker(
+                  markerId: MarkerId("ParkingLocation5"),
+                  icon: _parkingIcon ?? BitmapDescriptor.defaultMarker,
+                  position: _pSatbayevGMK,
+                  onTap: () {
+                    showMarkerDialog(
+                        context, _currentP!, _pSatbayevGMK, "5");
                   },
                 ),
               },

@@ -27,8 +27,7 @@ class _SearchParkingScreenState extends State<SearchParkingScreen> {
     try {
       // var url = 'http://10.0.2.2:5000/parkings'; // Для Эмулятора
       // var url = 'http://192.168.68.137:5000/parkings/'; // Для Мобильного устройства с мобильным интернетом
-      var url =
-          'http://192.168.0.13:5000/parkings'; // Для Мобильного устройства с Wi-Fi Batys_5G
+      var url = 'http://192.168.0.12:5000/parkings'; // Для Мобильного устройства с Wi-Fi Batys_5G
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
