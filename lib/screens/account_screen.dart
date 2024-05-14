@@ -14,7 +14,7 @@ import 'package:oryntapp/language/language.dart';
 
 import '../main.dart';
 
-
+// Профильдік экран
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -23,17 +23,19 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  // Ағымдағы пайдаланушы
   final currentUser = FirebaseAuth.instance.currentUser;
+  // Пайдаланушылар тізімі
   final userCollection = FirebaseFirestore.instance.collection("Users");
 
-
+  // Шығу функциясы
   Future<void> signOut() async {
     final navigator = Navigator.of(context);
     await FirebaseAuth.instance.signOut();
     navigator.pushNamedAndRemoveUntil(
         '/login', (Route<dynamic> route) => false);
   }
-
+  // Қолданушының атын өзгерту функциясы
   Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
@@ -74,6 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  // Суретті таңдау функциясы
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -94,7 +97,7 @@ class _AccountScreenState extends State<AccountScreen> {
       });
     }
   }
-
+  // Суретті жою функциясы
   Future<void> _deletePhoto() async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -110,7 +113,7 @@ class _AccountScreenState extends State<AccountScreen> {
         .doc(currentUser?.email)
         .update({'profile_photo': null});
   }
-
+  // Суретті жою терезесі
   Future<void> _deletePhotoDialog() async {
     return showDialog(
       context: context,
@@ -134,6 +137,7 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
+  // Толық экранда суретті көрсету функциясы
   void _showFullScreenImage(String imageUrl) {
     showDialog(
       context: context,
@@ -171,6 +175,7 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         title: Text(translation(context).profile),
         actions: [
+          // Шығу түймесі
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => signOut(),
@@ -186,7 +191,7 @@ class _AccountScreenState extends State<AccountScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final userData = snapshot.data!.data() as Map<String, dynamic>;
-
+            // Профиль суреті
             Widget profilePhoto = userData['profile_photo'] != null
                 ? Hero(
                     tag: 'profile_photo',
@@ -212,12 +217,14 @@ class _AccountScreenState extends State<AccountScreen> {
             return Column(
               children: [
                 const SizedBox(height: 20),
+                // Профиль суреті
                 Stack(
                   children: [
                     GestureDetector(
                       onLongPress: _deletePhotoDialog,
                       child: profilePhoto,
                     ),
+                    // Суретті қосу түймесі
                     Positioned(
                       bottom: -10,
                       left: 80,
@@ -231,12 +238,12 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
 
                 const SizedBox(height: 24),
-
+                // Пайдаланушының Email
                 Text('${currentUser?.email}',
                     style: const TextStyle(fontSize: 16)),
 
                 const SizedBox(height: 24),
-
+                // Пайдаланушының аты
                 MyTextBox(
                   text: userData['username'],
                   sectionName: translation(context).username,
@@ -244,7 +251,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
 
                 const SizedBox(height: 24),
-
+                // Қосымшаның тілін ауыстыру
                 Center(
                     child: DropdownButton<Language>(
                       iconSize: 30,

@@ -17,16 +17,14 @@ import 'package:oryntapp/screens/parking.dart';
 
 import 'package:oryntapp/services/firebase_streem.dart';
 
-// import 'package:oryntapp/theme/dark_theme.dart';
-// import 'package:oryntapp/theme/light_theme.dart';
-
 import 'firebase_options.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oryntapp/language/language_constants.dart';
 
-
+// Орталық қосымша
 Future<void> main() async {
+  // Firebase инициализациясы
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -39,7 +37,7 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
-
+  // Жаңа локальді орнату үшін
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.setLocale(newLocale);
@@ -47,6 +45,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Жаңа локаль
   Locale? _locale;
 
   setLocale(Locale locale) {
@@ -71,15 +70,10 @@ class _MyAppState extends State<MyApp> {
         }),
       ),
 
-      // theme: lightTheme,
-      // darkTheme: darkTheme,
-
-
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-
-
+      // Жаңа экрандарды қосу
       routes: {
         '/': (context) => const FirebaseStream(),
         '/welcome': (context) => const WelcomeScreen(),
@@ -94,6 +88,7 @@ class _MyAppState extends State<MyApp> {
 
         '/parking': (context) => const ParkingScreen(),
       },
+      // Бастапқы экран
       initialRoute: '/',
     );
   }

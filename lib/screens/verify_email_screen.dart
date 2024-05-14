@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:oryntapp/language/language_constants.dart';
-import 'package:oryntapp/screens/home_screen.dart';
 import 'package:oryntapp/services/snack_bar.dart';
+
+import 'login_screen.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
@@ -63,19 +64,19 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     } catch (e) {
       print(e);
       if (mounted) {
-        SnackBarService.showSnackBar(
-          context,
-          '$e',
-          //'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.',
-          true,
-        );
+        // SnackBarService.showSnackBar(
+        //   context,
+        //   '$e',
+        //   true,
+        // );
+        print(e);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? const HomeScreen()
+      ? LoginScreen()
       : Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(

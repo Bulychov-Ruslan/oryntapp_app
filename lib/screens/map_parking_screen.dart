@@ -7,6 +7,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
 import 'package:oryntapp/language/language_constants.dart';
 
+// Автотұрақ картасының экраны
 class MapParkingScreen extends StatefulWidget {
   const MapParkingScreen({super.key});
 
@@ -15,34 +16,38 @@ class MapParkingScreen extends StatefulWidget {
 }
 
 class _MapParkingScreenState extends State<MapParkingScreen> {
+  // Маршруттың басылғанын бақылау
   bool _isRouteButtonPressed = false;
-
+  // Орындарды басқарушы
   Location _locationController = new Location();
-
+  // Картаны басқарушы
   final Completer<GoogleMapController> _mapController =
       Completer<GoogleMapController>();
-
+  // Орындардың координаттары
   static const LatLng _pBaitursynov1 = LatLng(43.2389, 76.9279);
   static const LatLng _pBaitursynov2 = LatLng(43.2402, 76.9277);
   static const LatLng _pKazNu = LatLng(43.2262, 76.9213);
   static const LatLng _pSatbayevGuk = LatLng(43.2368, 76.9303);
   static const LatLng _pSatbayevGMK = LatLng(43.2365, 76.9306);
-
+  // Орналасқан орын
   LatLng? _currentP = null;
-
+  // Орындардың суреттері
   BitmapDescriptor? _userLocationIcon;
   BitmapDescriptor? _parkingIcon;
 
+  // Полилинияларды басқарушы
   Map<PolylineId, Polyline> polylines = {};
 
   @override
   void initState() {
     super.initState();
     _loadCustomIcons().then((_) {
+      // Орындардың алуы
       getLocationUpdates();
     });
   }
 
+  // Орындардың суреттерін жүктеу
   Future<void> _loadCustomIcons() async {
     _userLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/images/user_location_icon.png');
@@ -56,6 +61,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
       appBar: AppBar(
         title: Text(translation(context).parkingMap),
         actions: <Widget>[
+          // Орындарды жаңарту түймесі
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
@@ -64,6 +70,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
           ),
         ],
       ),
+      // Автотұрақ картасы
       body: _currentP == null
           ? const Center(
               child: CircularProgressIndicator(),
@@ -75,6 +82,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
                 target: _currentP!,
                 zoom: 12.2,
               ),
+              // Орындардың маркерлері
               markers: {
                 Marker(
                   markerId: MarkerId("_currentLocation"),
@@ -132,18 +140,18 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
             ),
     );
   }
-
+  // Орналасқан орын координаттарына апару
   Future<void> _cameraToPosition(LatLng pos) async {
     final GoogleMapController controller = await _mapController.future;
     CameraPosition _newCameraPosition = CameraPosition(
       target: pos,
-      zoom: 13,
+      zoom: 12.2,
     );
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(_newCameraPosition),
     );
   }
-
+  // Орындардың координаттарын алу
   Future<void> getLocationUpdates() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
@@ -200,7 +208,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
       }
     });
   }
-
+  // Маршруттың координаттарын алу
   Future<List<LatLng>> getPolylinePoints(LatLng start, LatLng end) async {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
@@ -219,7 +227,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
     }
     return polylineCoordinates;
   }
-
+  // Маршруттың полиниларын жасау
   void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
@@ -232,7 +240,7 @@ class _MapParkingScreenState extends State<MapParkingScreen> {
       polylines[id] = polyline;
     });
   }
-
+  // Маркер басқанда терезе көрсету
   void showMarkerDialog(
       BuildContext context, LatLng currentP, LatLng markerP, String parkingId) {
     showDialog(
