@@ -32,7 +32,7 @@ class _SearchParkingScreenState extends State<SearchParkingScreen> {
   Future<void> fetchParkingList() async {
     try {
       // var url = 'http://10.0.2.2:5000/parkings';
-      var url = 'http://192.168.68.137:5000/parkings';
+      var url = 'http://192.168.1.137:5000/parkings';
       // var url = 'http://192.168.0.12:5000/parkings';
       // var url = 'http://10.68.7.125:5000/parkings';
       final response = await http.get(Uri.parse(url));
@@ -87,7 +87,7 @@ class _SearchParkingScreenState extends State<SearchParkingScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
             // Іздеу жолының интерфейсі
             child: TextField(
               controller: searchController,
@@ -96,7 +96,7 @@ class _SearchParkingScreenState extends State<SearchParkingScreen> {
                 labelText: translation(context).searchByAddress,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
             ),
@@ -111,7 +111,7 @@ class _SearchParkingScreenState extends State<SearchParkingScreen> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
+                            vertical: 2, horizontal: 10),
                         // Тұрақ көрсетілген карточка
                         child: Card(
                           elevation: 2,

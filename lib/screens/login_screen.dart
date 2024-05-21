@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:oryntapp/main.dart';
 import 'package:oryntapp/services/snack_bar.dart';
@@ -48,9 +49,43 @@ class _LoginScreenState extends State<LoginScreen> {
         email: emailTextInputController.text.trim(),
         password: passwordTextInputController.text.trim(),
       );
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Lottie.asset('assets/lottie/success_animation.json',
+                    width: 150,
+                    height: 150,
+                    repeat: false,
+                    onLoaded: (composition) {
+                      Future.delayed(composition.duration).then((_) {
+                        Navigator.of(context).pop();
+                        navigator.pushNamedAndRemoveUntil(
+                            '/home', (Route<dynamic> route) => false);
+                      });
+                    }),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    translation(context).successfulAuthorization,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
     } on FirebaseAuthException catch (e) {
       print(e.code);
-
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         SnackBarService.showSnackBar(
           context,
@@ -67,9 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
     }
-
-    navigator.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +154,19 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Form(
           key: formKey,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
 
+              Text(
+                'OrynTapp',
+                style: TextStyle(
+                    fontSize: 60,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.bold,
+                ),
+              ),
 
+              const SizedBox(height: 50),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -139,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
 
               TextFormField(
                 autocorrect: false,
@@ -164,12 +208,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
               ElevatedButton(
                 onPressed: login,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.blueAccent,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                   shape: RoundedRectangleBorder(
@@ -182,34 +226,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 10),
-
-
-              TextButton(
-                onPressed: () => Navigator.of(context).pushNamed('/signup'),
-                child: Text(
-                  translation(context).signup,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.blueGrey,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-
               TextButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed('/reset_password'),
                 child: Text(
                   translation(context).resetPassword,
                   style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.blueGrey,
-                    fontSize: 16,
+                    color: Colors.blueAccent,
+                    fontSize: 18,
                   ),
+                ),
               ),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(translation(context).dontHaveAnAccount,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed('/signup'),
+                    child: Text(
+                      translation(context).signup,
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-
             ],
           ),
         ),
@@ -217,3 +265,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

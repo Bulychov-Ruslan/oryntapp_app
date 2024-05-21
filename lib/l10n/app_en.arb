@@ -5,13 +5,16 @@
 
   "login": "Login",
   "signup": "Sign Up",
+  "dontHaveAnAccount": "Don't have an account?",
   "resetPassword": "Reset Password",
+  "successfulAuthorization": "Successful authorization!",
 
   "enterEmail": "Enter your Email",
   "password": "Password",
   "enterPassword": "Enter your password",
   "repeatPassword": "Repeat Password",
   "enterRepeatPassword": "Repeat your password",
+  "alreadyHaveAnAccount": "Already have an account?",
 
   "inCorrectEmailOrPasswordTryAgain": "Incorrect email or password. Try again.",
   "unknownErrorTryAgainOrContactSupport": "Unknown error. Try again or contact support.",
@@ -25,6 +28,7 @@
   "emailAddressVerification": "Email Address Verification",
   "emailVerificationSent": "Email verification sent",
   "resendVerificationEmail": "Resend Verification",
+  "successfulVerification": "Successful verification!",
 
   "parkings": "Parkings",
   "search": "Search",
@@ -52,6 +56,8 @@
   "deletePhoto": "Delete Photo?",
   "areYouSureYouWantToDeleteYourProfilePhoto": "Are you sure you want to delete your profile photo?",
   "delete": "Delete",
+  "deleteAccount": "Delete Account?",
+  "areYouSureYouWantToDeleteYourAccountPermanently": "Are you sure you want to delete your account permanently? This action cannot be undone.",
 
   "parkingPlaces": "Parking Places",
   "freeSeats": "Free Seats",

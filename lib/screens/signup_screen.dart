@@ -140,6 +140,16 @@ class _SignUpScreen extends State<SignUpScreen> {
           child: Column(
             children: [
 
+              Text(
+                'OrynTapp',
+                style: TextStyle(
+                  fontSize: 60,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 50),
+
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -156,7 +166,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
 
               TextFormField(
                 autocorrect: false,
@@ -183,7 +193,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
 
               TextFormField(
                 autocorrect: false,
@@ -210,12 +220,12 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
               ElevatedButton(
                 onPressed: signUp,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 85, vertical: 15),
                   shape: RoundedRectangleBorder(
@@ -227,19 +237,26 @@ class _SignUpScreen extends State<SignUpScreen> {
                   style: const TextStyle(fontSize: 18),
                 ),
               ),
-
-              const SizedBox(height: 10),
-
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  translation(context).login,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.blueGrey,
-                    fontSize: 18,
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(translation(context).alreadyHaveAnAccount,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed('/login'),
+                    child: Text(
+                      translation(context).login,
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
             ],

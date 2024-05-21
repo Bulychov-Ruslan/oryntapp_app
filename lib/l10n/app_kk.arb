@@ -5,13 +5,16 @@
 
   "login": "Кіру",
   "signup": "Тіркелу",
+  "dontHaveAnAccount": "Аккаунтыңыз жоқ па?",
   "resetPassword": "Құпия сөзді қалпына келтіру",
+  "successfulAuthorization": "Сәтті кіру!",
 
   "enterEmail": "Email поштаңызды енгізіңіз",
   "password": "Құпия сөз",
   "enterPassword": "Құпия сөзді енгізіңіз",
   "repeatPassword": "Құпия сөзді қайталаңыз",
   "enterRepeatPassword": "Құпия сөзді қайта енгізіңіз",
+  "alreadyHaveAnAccount": "Аккаунтыңыз бар ма?",
 
   "inCorrectEmailOrPasswordTryAgain": "Email немесе құпия сөз дұрыс емес. Қайталап көріңіз",
   "unknownErrorTryAgainOrContactSupport": "Белгісіз қате! Қайталап көріңіз немесе техникалық қолдау қызметіне хабарласыңыз.",
@@ -25,6 +28,7 @@
   "emailAddressVerification": "Email мекенжайын растау",
   "emailVerificationSent": "Email мекенжайын растау хатты поштаңызға жіберілді",
   "resendVerificationEmail": "Қайта жіберу",
+  "successfulVerification": "Сәтті расталды!",
 
   "parkings": "Автотұрақтар",
   "search": "Іздеу",
@@ -52,6 +56,8 @@
   "deletePhoto": "Фотосуретті жою керек пе?",
   "areYouSureYouWantToDeleteYourProfilePhoto": "Профиль фотосуретіңізді шынымен жойғыңыз келе ме?",
   "delete": "Жою",
+  "deleteAccount": "Аккаунтты жою",
+  "areYouSureYouWantToDeleteYourAccountPermanently": "Аккаунтты біржола жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті қайтару мүмкін емес.",
 
   "parkingPlaces": "Автотұрақ орындары",
   "freeSeats": "Бос орындар",

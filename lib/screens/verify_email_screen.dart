@@ -1,8 +1,9 @@
 import 'dart:async';
+
+import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:oryntapp/language/language_constants.dart';
-import 'package:oryntapp/services/snack_bar.dart';
 
 import 'login_screen.dart';
 
@@ -42,14 +43,18 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
   Future<void> checkEmailVerified() async {
     await FirebaseAuth.instance.currentUser!.reload();
+    bool newEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
-    setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-    });
+    if (newEmailVerified != isEmailVerified) {
+      setState(() {
+        isEmailVerified = newEmailVerified;
+      });
 
-    print(isEmailVerified);
-
-    if (isEmailVerified) timer?.cancel();
+      if (isEmailVerified) {
+        timer?.cancel();
+        showSuccessAnimation();
+      }
+    }
   }
 
   Future<void> sendVerificationEmail() async {
@@ -59,79 +64,105 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
       setState(() => canResendEmail = false);
       await Future.delayed(const Duration(seconds: 5));
-
       setState(() => canResendEmail = true);
     } catch (e) {
       print(e);
       if (mounted) {
-        // SnackBarService.showSnackBar(
-        //   context,
-        //   '$e',
-        //   true,
-        // );
         print(e);
       }
     }
   }
 
+  void showSuccessAnimation() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Lottie.asset(
+              'assets/lottie/success_animation.json',
+              width: 150,
+              height: 150,
+              repeat: false,
+              onLoaded: (composition) {
+                Future.delayed(composition.duration).then((_) {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => LoginScreen()));
+                });
+              },
+            ),
+            Text(translation(context).successfulVerification,
+                style: const TextStyle(fontSize: 20)),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context) => isEmailVerified
-      ? LoginScreen()
-      : Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: Text(translation(context).emailAddressVerification),
-          ),
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Center(
-                child: Column(
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-                    Text(
-                      translation(context).emailVerificationSent,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    ElevatedButton.icon(
-                      onPressed: canResendEmail ? sendVerificationEmail : null,
-                      icon: const Icon(Icons.email),
-                      label: Text(
-                        translation(context).resendVerificationEmail,
+  Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(translation(context).emailAddressVerification),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (!isEmailVerified)
+                    Column(
+                      children: [
+                        Text(
+                          translation(context).emailVerificationSent,
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 25,
                           ),
-                      ),
-
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    TextButton(
-                      onPressed: () async {
-                        timer?.cancel();
-                        await FirebaseAuth.instance.currentUser!.delete();
-                      },
-                      child: Text(
-                        translation(context).cancel,
-                        style: const TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 16,
                         ),
-                      ),
+                        const SizedBox(height: 20),
+                        ElevatedButton.icon(
+                          onPressed:
+                              canResendEmail ? sendVerificationEmail : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          icon: const Icon(Icons.email),
+                          label: Text(
+                            translation(context).resendVerificationEmail,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () async {
+                            timer?.cancel();
+                            await FirebaseAuth.instance.currentUser!.delete();
+                          },
+                          child: Text(translation(context).cancel,
+                              style: const TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 18,
+                              )),
+                        )
+                      ],
                     )
-
-                  ],
-                ),
+                ],
               ),
             ),
           ),
-        );
+        ),
+      );
 }

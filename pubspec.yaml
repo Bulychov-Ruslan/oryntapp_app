@@ -54,6 +54,9 @@ dependencies:
   flutter_polyline_points: ^2.0.0
   #
   http: ^1.2.1
+  #
+  lottie: ^3.1.2
+
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -90,6 +93,7 @@ flutter:
      - assets/images/default_photo.jpg
      - assets/images/user_location_icon.png
      - assets/images/parking_icon.png
+     - assets/lottie/success_animation.json
      - assets/
      - assets/icons/
 

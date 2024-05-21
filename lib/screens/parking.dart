@@ -48,7 +48,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
   // Автотұрақ деректерін алу функциясы
   Future<void> fetchParkingData(String parkingId) async {
     // var url = 'http://10.0.2.2:5000/parkings/$parkingId';
-    var url = 'http://192.168.68.137:5000/parkings/$parkingId';
+    var url = 'http://192.168.1.137:5000/parkings/$parkingId';
     // var url = 'http://192.168.0.12:5000/parkings/$parkingId';
     // var url = 'http://10.68.7.125:5000/parkings/$parkingId';
     // Серверге HTTP запрос жасау
@@ -109,7 +109,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
           const SizedBox(height: 10),
           // Автотұрақ мекен-жайы
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10),
             child: Text(
               '${translation(context).address} $parkingAddress',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -118,8 +118,8 @@ class _ParkingScreenState extends State<ParkingScreen> {
           // Бос және бос емес орындарды саны
           Padding(
             padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+              left: 10.0,
+              right: 10.0,
             ),
             child: Card(
               child: ListTile(
@@ -131,8 +131,8 @@ class _ParkingScreenState extends State<ParkingScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+              left: 10.0,
+              right: 10.0,
             ),
             child: Card(
               child: ListTile(
@@ -211,7 +211,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
             ),
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 25),
           // Автотұрақ орындары
           Expanded(
             child: ListView(
@@ -241,8 +241,8 @@ class _ParkingScreenState extends State<ParkingScreen> {
                               int flatIndex = previousItemsCount + index + 1; // Нумерация начинается с 1
                               return Card(
                                 child: Container(
-                                  width: 80,
-                                  height: 140,
+                                  width: 70,
+                                  height: 130,
                                   margin: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
                                     color: parkingStatus[rowIndex][index]

@@ -5,13 +5,16 @@
 
   "login": "Войти",
   "signup": "Регистрация",
+  "dontHaveAnAccount": "У вас нет аккаунта?",
   "resetPassword": "Сбросить пароль",
+  "successfulAuthorization": "Успешная авторизация!",
 
   "enterEmail": "Введите ваш Email",
   "password": "Пароль",
   "enterPassword": "Введите ваш пароль",
   "repeatPassword": "Повторите пароль",
   "enterRepeatPassword": "Повторите ваш пароль",
+  "alreadyHaveAnAccount": "Уже есть аккаунт?",
 
   "inCorrectEmailOrPasswordTryAgain": "Неверный Email или пароль. Попробуйте еще раз",
   "unknownErrorTryAgainOrContactSupport": "Неизвестная ошибка! Попробуйте еще раз или обратитесь в техническую поддержку.",
@@ -25,6 +28,7 @@
   "emailAddressVerification": "Подтверждение Email адреса",
   "emailVerificationSent": "Письмо для подтверждения отправлено на ваш Email",
   "resendVerificationEmail": "Повторно отправить",
+  "successfulVerification": "Успешное подтверждение!",
 
   "parkings": "Парковки",
   "search": "Поиск",
@@ -52,6 +56,8 @@
   "deletePhoto": "Удалить фото?",
   "areYouSureYouWantToDeleteYourProfilePhoto": "Вы уверены, что хотите удалить фото профиля?",
   "delete": "Удалить",
+  "deleteAccount": "Удалить аккаунт",
+  "areYouSureYouWantToDeleteYourAccountPermanently": "Вы уверены, что хотите удалить свою аккаунт навсегда? Это действие не может быть отменено.",
 
   "parkingPlaces": "Места парковки",
   "freeSeats": "Свободные места",
