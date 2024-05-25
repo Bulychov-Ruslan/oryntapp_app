@@ -546,6 +546,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(translation(context).profile),
         actions: [
@@ -663,13 +664,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     )
                     .toList(),
               )),
-              Spacer(),
+               const Spacer(),
               // Аккаунтын жою түймесі
               ElevatedButton.icon(
                 icon: const Icon(Icons.delete_forever),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.red,
                 ),
                 onPressed: () {
                   showDialog(
@@ -696,7 +697,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 },
                 label: Text(translation(context).deleteAccount),
               ),
-              SizedBox(height: 40,)
+              SizedBox(height: 9),
             ],
           );
         },
