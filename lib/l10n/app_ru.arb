@@ -60,13 +60,21 @@
   "areYouSureYouWantToDeleteYourAccountPermanently": "Вы уверены, что хотите удалить свою аккаунт навсегда? Это действие не может быть отменено.",
 
   "parkingPlaces": "Места парковки",
-  "freeSeats": "Свободные места",
+  "freePlaces": "Свободные места",
   "occupiedPlaces": "Занятые места",
   "filter": "Фильтр:",
   "allPlaces": "Все места",
   "free": "Свободные",
   "occupied": "Занятые",
   "row": "Ряд",
+  "selectReservationDuration": "Выберите длительность бронирования:",
+  "minutes": "минуты",
+  "confirmCancellation": "Подтвердите отмену",
+  "areYouSureYouWantToCancelTheReservation": "Вы уверены, что хотите отменить бронирование?",
+  "no": "Нет",
+  "yes": "Да",
+
+
 
   "account": "Account"
 }

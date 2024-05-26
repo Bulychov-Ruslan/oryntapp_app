@@ -60,13 +60,19 @@
   "areYouSureYouWantToDeleteYourAccountPermanently": "Are you sure you want to delete your account permanently? This action cannot be undone.",
 
   "parkingPlaces": "Parking Places",
-  "freeSeats": "Free Seats",
+  "freePlaces": "Free Places",
   "occupiedPlaces": "Occupied Places",
   "filter": "Filter:",
   "allPlaces": "All places",
   "free": "Free",
   "occupied": "Occupied",
   "row": "Row",
+  "selectReservationDuration": "Select reservation duration:",
+  "minutes": "minutes",
+  "confirmCancellation": "Confirm Cancellation",
+  "areYouSureYouWantToCancelTheReservation": "Are you sure you want to cancel the reservation?",
+  "no": "No",
+  "yes": "Yes",
 
 
   "account": "Account"

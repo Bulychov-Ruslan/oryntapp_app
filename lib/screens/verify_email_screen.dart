@@ -1,11 +1,10 @@
-import 'dart:async';
+import 'dart:async';  // Асинхронды операциялар үшін Dart пакетінің импорты
+import 'package:lottie/lottie.dart';  // Lottie анимацияларын пайдалану үшін пакет
+import 'package:firebase_auth/firebase_auth.dart';  // Firebase аутентификациясы үшін пакет
+import 'package:flutter/material.dart';  // Flutter-дің негізгі пакеті
+import 'package:oryntapp/language/language_constants.dart';  // Тілдік константтарды импорттаймыз
+import 'login_screen.dart';  // Кіру экранын импорттаймыз
 
-import 'package:lottie/lottie.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:oryntapp/language/language_constants.dart';
-
-import 'login_screen.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
@@ -15,32 +14,30 @@ class VerifyEmailScreen extends StatefulWidget {
 }
 
 class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
-  bool isEmailVerified = false;
-  bool canResendEmail = false;
-  Timer? timer;
+  bool isEmailVerified = false; // Электрондық поштаның расталғанын көрсететін белгі
+  bool canResendEmail = false;  // Электрондық поштаны қайта жіберуге болатындығын көрсететін белгі
+  Timer? timer; // Таймер объектісі
 
   @override
   void initState() {
     super.initState();
-
-    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-
+    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified; // Қазіргі қолданушының электрондық поштасының расталғанын тексереміз
     if (!isEmailVerified) {
-      sendVerificationEmail();
+      sendVerificationEmail(); // Егер расталмаған болса, растау хат жібереміз
 
       timer = Timer.periodic(
         const Duration(seconds: 3),
-        (_) => checkEmailVerified(),
+        (_) => checkEmailVerified(), // Электрондық поштаның расталғанын әр 3 секунд сайын тексереміз
       );
     }
   }
 
   @override
   void dispose() {
-    timer?.cancel();
+    timer?.cancel(); // Таймерді тоқтатамыз
     super.dispose();
   }
-
+  // Электрондық поштаның расталғанын тексеру функциясы.
   Future<void> checkEmailVerified() async {
     await FirebaseAuth.instance.currentUser!.reload();
     bool newEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
@@ -56,7 +53,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       }
     }
   }
-
+  //Электрондық поштаны растау хатын жіберу функциясы.
   Future<void> sendVerificationEmail() async {
     try {
       final user = FirebaseAuth.instance.currentUser!;
@@ -72,7 +69,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       }
     }
   }
-
+  // Сәтті тіркелді анимациясын көрсету функциясы.
   void showSuccessAnimation() {
     showDialog(
       context: context,
@@ -125,6 +122,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
+                        // Электрондық поштаны қайта жіберу үшін түйме
                         ElevatedButton.icon(
                           onPressed:
                               canResendEmail ? sendVerificationEmail : null,
@@ -146,6 +144,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
+                        // Электрондық поштаны растауды болдырмай түймесі
                         TextButton(
                           onPressed: () async {
                             timer?.cancel();

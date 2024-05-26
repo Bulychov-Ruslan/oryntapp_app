@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:oryntapp/language/language_constants.dart';
-import 'package:oryntapp/screens/map_parking_screen.dart';
-import 'package:oryntapp/screens/search_parking_screen.dart';
-import 'package:oryntapp/screens/account_screen.dart';
+import 'package:flutter/material.dart';  // Flutter-дың негізгі пакеті
+import 'package:oryntapp/language/language_constants.dart';  // Тілдік константтарды пайдалану үшін қажет
+import 'package:oryntapp/screens/map_parking_screen.dart';  // Тұрақ картасы экранын импорттау
+import 'package:oryntapp/screens/search_parking_screen.dart';  // Тұрақ іздеу экранын импорттау
+import 'package:oryntapp/screens/account_screen.dart';  // Аккаунт экранын импорттау
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,17 +12,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; // Таңдалған элементтің индексі
 
   final List<Widget> _widgetOptions = [
-    const MapParkingScreen(),
-    const SearchParkingScreen(),
-    const AccountScreen(),
+    const MapParkingScreen(), // Тұрақ картасы беті
+    const SearchParkingScreen(), // Тұрақ іздеу беті
+    const AccountScreen(), // Аккаунт беті
   ];
 
   void _onItemTapped(int index) {
+    // Төменгі навигациядағы элементті басқанда орындалатын функция
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = index; // Таңдалған элементтің индексін жаңарту
     });
   }
 
@@ -30,32 +31,32 @@ class _MyHomePageState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(_selectedIndex), // Таңдалған элементтің бетін көрсету
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white.withOpacity(0.8),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey.shade600,
-        iconSize: 33,
-        selectedFontSize: 16,
-        unselectedFontSize: 14,
+        type: BottomNavigationBarType.fixed, // Навигацияның түрін белгілеу
+        backgroundColor: Colors.white.withOpacity(0.8), // Навигацияның фон түсін белгілеу
+        selectedItemColor: Colors.black, // Таңдалған элементтің түсін белгілеу
+        unselectedItemColor: Colors.grey.shade600, // Таңдалмаған элементтің түсін белгілеу
+        iconSize: 33, // Иконкалардың өлшемі
+        selectedFontSize: 16, // Таңдалған элементтің шрифт өлшемі
+        unselectedFontSize: 14, // Таңдалмаған элементтің шрифт өлшемі
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.place),
-            label: translation(context).parkings,
+            icon: const Icon(Icons.place), // Автотұрақ картасы иконкасы
+            label: translation(context).parkings, // Автотұрақ картасы тексті
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: translation(context).search,
+            icon: const Icon(Icons.search), // Іздеу иконкасы
+            label: translation(context).search, // Іздеу тексті
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.person),
-            label: translation(context).profile,
+            icon: const Icon(Icons.person), // Профиль иконкасы
+            label: translation(context).profile, // Профиль тексті
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: _selectedIndex, // Таңдалған элементтің индексі
+        onTap: _onItemTapped, // Таңдалған элементті басқанда орындалатын функция
       ),
     );
   }

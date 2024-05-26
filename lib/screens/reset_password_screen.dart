@@ -1,9 +1,9 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:oryntapp/services/snack_bar.dart';
+import 'package:email_validator/email_validator.dart';  // Электрондық поштаның дұрыстығын тексеру үшін қажет
+import 'package:firebase_auth/firebase_auth.dart';  // Firebase аутентификациясы үшін қажет
+import 'package:flutter/material.dart';  // Flutter-дың негізгі пакеті
+import 'package:oryntapp/services/snack_bar.dart';  // SnackBar қызметін пайдалану үшін қажет
+import 'package:oryntapp/language/language_constants.dart';  // Тілдік константтарды пайдалану үшін қажет
 
-import 'package:oryntapp/language/language_constants.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -13,26 +13,27 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  TextEditingController emailTextInputController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  TextEditingController emailTextInputController = TextEditingController(); // Электрондық пошта енгізу өрісі үшін контроллер
+  final formKey = GlobalKey<FormState>(); // Форма күйін бақылау үшін кілт
 
   @override
   void dispose() {
+    // Контроллерді тазалау
     emailTextInputController.dispose();
 
     super.dispose();
   }
-
+  // Құпия сөзді қалпына келтіру функциясы.
   Future<void> resetPassword() async {
     final navigator = Navigator.of(context);
     final scaffoldMassager = ScaffoldMessenger.of(context);
 
-    final isValid = formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate(); // Форма деректерін тексеру
     if (!isValid) return;
 
     try {
       await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailTextInputController.text.trim());
+          .sendPasswordResetEmail(email: emailTextInputController.text.trim()); // Құпия сөзді қалпына келтіру хатын жіберу
 
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -60,7 +61,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
 
     scaffoldMassager.showSnackBar(snackBar);
-
+    // Қалпына келтіру хаты жіберілгеннен кейін кіру экранына ауысу
     navigator.pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
@@ -77,6 +78,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           key: formKey,
           child: Column(
             children: [
+              // Электрондық пошта енгізу өрісі
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -94,7 +96,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
 
               const SizedBox(height: 30),
-
+              // Құпия сөзді қалпына келтіру батырмасы
               ElevatedButton(
                 onPressed: resetPassword,
                 style: ElevatedButton.styleFrom(

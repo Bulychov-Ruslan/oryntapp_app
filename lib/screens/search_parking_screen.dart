@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
+import 'package:flutter/material.dart'; // Материал дизайны
+import 'package:http/http.dart' as http; // HTTP сұрауларын жасау үшін
+import 'dart:async'; // Асинхронды операциялар үшін
+import 'dart:convert'; // JSON мәліметтерін парс қылу үшін
 
-import 'package:oryntapp/language/language_constants.dart';
+import 'package:oryntapp/language/language_constants.dart'; // Тіл пакеті
 
-// Көлік тұрағын іздеу экраны
+
 class SearchParkingScreen extends StatefulWidget {
   const SearchParkingScreen({super.key});
 
@@ -14,18 +14,14 @@ class SearchParkingScreen extends StatefulWidget {
 }
 
 class _SearchParkingScreenState extends State<SearchParkingScreen> {
-  // Бастапқы тұрақ тізімі
-  late List<Map<String, dynamic>> originalParkingList;
-  // Қазіргі тұрақ тізімі
-  List<Map<String, dynamic>> parkingList = [];
-  // Іздеу жолын басқарушысы
-  TextEditingController searchController = TextEditingController();
+  late List<Map<String, dynamic>> originalParkingList; // Бастапқы тұрақ тізімі
+  List<Map<String, dynamic>> parkingList = []; // Қазіргі тұрақ тізімі
+  TextEditingController searchController = TextEditingController(); // Іздеу жолын басқарушысы
 
   @override
   void initState() {
     super.initState();
-    // Тұрақтар тізімін алу
-    fetchParkingList();
+    fetchParkingList(); // Тұрақтар тізімін алу
   }
 
   // Серверден тұрақ тізімін алу функциясы

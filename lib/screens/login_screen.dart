@@ -1,13 +1,13 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:email_validator/email_validator.dart';  // Электрондық поштаның дұрыстығын тексеру үшін қажет
+import 'package:firebase_auth/firebase_auth.dart';  // Firebase аутентификациясы үшін қажет
+import 'package:flutter/material.dart';  // Flutter-дың негізгі пакеті
+import 'package:lottie/lottie.dart';  // Lottie анимацияларын пайдалану үшін пакет
 
-import 'package:oryntapp/main.dart';
-import 'package:oryntapp/services/snack_bar.dart';
+import 'package:oryntapp/main.dart';  // Негізгі қолданба файлын импорттау
+import 'package:oryntapp/services/snack_bar.dart';  // SnackBar қызметін пайдалану үшін қажет
 
-import 'package:oryntapp/language/language.dart';
-import 'package:oryntapp/language/language_constants.dart';
+import 'package:oryntapp/language/language.dart';  // Тілдік параметрлерді пайдалану үшін қажет
+import 'package:oryntapp/language/language_constants.dart';  // Тілдік константтарды пайдалану үшін қажет
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,14 +18,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isHiddenPassword = true;
-  TextEditingController emailTextInputController = TextEditingController();
-  TextEditingController passwordTextInputController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  bool isHiddenPassword = true; // Құпия сөзді көрсету/жасыру күйі
+  TextEditingController emailTextInputController = TextEditingController(); // Электрондық пошта енгізу өрісі үшін контроллер
+  TextEditingController passwordTextInputController = TextEditingController(); // Құпия сөзді енгізу өрісі үшін контроллер
+  final formKey = GlobalKey<FormState>(); // Форма күйін бақылау үшін кілт
 
 
   @override
   void dispose() {
+    // Контроллерлерді тазалау
     emailTextInputController.dispose();
     passwordTextInputController.dispose();
 
@@ -33,15 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void togglePasswordView() {
+    // Құпия сөзді көрсету/жасыру күйін өзгерту
     setState(() {
       isHiddenPassword = !isHiddenPassword;
     });
   }
-
+  // Кіру функциясы.
   Future<void> login() async {
     final navigator = Navigator.of(context);
 
-    final isValid = formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate(); // Форма деректерін тексеру
     if (!isValid) return;
 
     try {
@@ -49,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email: emailTextInputController.text.trim(),
         password: passwordTextInputController.text.trim(),
       );
-
+      // Сәтті кіргеннен кейін анимация көрсету
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -120,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.language,
               ),
               onChanged: (Language? language) async {
+                // Тілді өзгерту
                 if (language != null) {
                   Locale _locale = await setLocale(language.languageCode);
                   MyApp.setLocale(context, _locale);
@@ -156,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-
+              // Қолданбаның атауы
               Text(
                 'OrynTapp',
                 style: TextStyle(
@@ -167,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 50),
+              // Электрондық пошта енгізу өрісі
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -184,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 10),
-
+              // Құпия сөзді енгізу өрісі
               TextFormField(
                 autocorrect: false,
                 controller: passwordTextInputController,
@@ -209,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 20),
-
+              // Кіру батырмасы
               ElevatedButton(
                 onPressed: login,
                 style: ElevatedButton.styleFrom(
@@ -225,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
-
+              // Құпия сөзді қалпына келтіру батырмасы
               TextButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed('/reset_password'),
@@ -238,6 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Spacer(),
+              // Егер тіркелмеген болсаңыз, тіркелу батырмасы
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

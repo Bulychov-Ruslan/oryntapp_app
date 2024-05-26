@@ -1,13 +1,13 @@
-import 'dart:async';
+import 'dart:async'; // Асинхронды операциялар үшін
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Материал дизайны
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:location/location.dart';
-import 'package:oryntapp/language/language_constants.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart'; // Google картасы
+import 'package:flutter_polyline_points/flutter_polyline_points.dart'; // Полилиниялар
+import 'package:location/location.dart'; // Орындарды алу үшін
+import 'package:oryntapp/language/language_constants.dart'; // Тіл пакеті
 
-// Автотұрақ картасының экраны
+
 class MapParkingScreen extends StatefulWidget {
   const MapParkingScreen({super.key});
 
@@ -16,27 +16,24 @@ class MapParkingScreen extends StatefulWidget {
 }
 
 class _MapParkingScreenState extends State<MapParkingScreen> {
-  // Маршруттың басылғанын бақылау
-  bool _isRouteButtonPressed = false;
-  // Орындарды басқарушы
-  Location _locationController = new Location();
-  // Картаны басқарушы
+  bool _isRouteButtonPressed = false; // Маршруттың басылғанын бақылау
+  Location _locationController = new Location();// Орындарды басқарушы
+
   final Completer<GoogleMapController> _mapController =
-      Completer<GoogleMapController>();
+      Completer<GoogleMapController>(); // Картаны басқарушы
   // Орындардың координаттары
   static const LatLng _pBaitursynov1 = LatLng(43.2389, 76.9279);
   static const LatLng _pBaitursynov2 = LatLng(43.2402, 76.9277);
   static const LatLng _pKazNu = LatLng(43.2262, 76.9213);
   static const LatLng _pSatbayevGuk = LatLng(43.2368, 76.9303);
   static const LatLng _pSatbayevGMK = LatLng(43.2365, 76.9306);
-  // Орналасқан орын
-  LatLng? _currentP = null;
+
+  LatLng? _currentP = null; // Орналасқан орын
   // Орындардың суреттері
   BitmapDescriptor? _userLocationIcon;
   BitmapDescriptor? _parkingIcon;
 
-  // Полилинияларды басқарушы
-  Map<PolylineId, Polyline> polylines = {};
+  Map<PolylineId, Polyline> polylines = {}; // Полилинияларды басқарушы
 
   @override
   void initState() {

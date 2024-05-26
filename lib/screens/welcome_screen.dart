@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Материал пакетін импорттау
 
-import 'package:oryntapp/language/language_constants.dart';
-import 'package:oryntapp/language/language.dart';
-import '../main.dart';
+import 'package:oryntapp/language/language_constants.dart'; // Тілді ауыстыру үшін импорттау
+import 'package:oryntapp/language/language.dart'; // Тілді ауыстыру үшін импорттау
+
+import '../main.dart'; // Main.dart файлын импорттау
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -12,6 +13,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
+          // Тілді ауыстыру (Change Language)
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton<Language>(
@@ -53,6 +55,7 @@ class WelcomeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Сәлемдеcу тексті (Welcome Text)
                 Text(
                   translation(context).welcome,
                   style: const TextStyle(
@@ -63,9 +66,11 @@ class WelcomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
+                // Сәлемдесі бетінің суреті
                 Image.asset("assets/images/welcome_photo.png",
                     width: MediaQuery.of(context).size.width * 0.8),
                 const SizedBox(height: 20),
+                // Сәлемдесу бетінің мәтіні
                 Text(
                   translation(context).welcomeText1,
                   style: const TextStyle(
@@ -75,6 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
+                // Сәлемдесу бетінің екінші мәтіні
                 Text(
                   translation(context).welcomeText2,
                   style: const TextStyle(
@@ -84,9 +90,11 @@ class WelcomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
+                // Кіру және тіркелу түймелері (Login and Signup Buttons)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // Кіру түймесі (Login Button)
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed('/login');
@@ -101,6 +109,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: Text(translation(context).login,
                           style: const TextStyle(color: Colors.white)),
                     ),
+                    // Тіркелу түймесі (Signup Button)
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed('/signup');

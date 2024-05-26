@@ -60,13 +60,20 @@
   "areYouSureYouWantToDeleteYourAccountPermanently": "Аккаунтты біржола жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті қайтару мүмкін емес.",
 
   "parkingPlaces": "Автотұрақ орындары",
-  "freeSeats": "Бос орындар",
+  "freePlaces": "Бос орындар",
   "occupiedPlaces": "Бос емес орындар",
   "filter": "Фильтр:",
   "allPlaces": "Барлық орындар",
   "free": "Бос",
   "occupied": "Бос емес",
   "row": "Қатар",
+  "selectReservationDuration": "Брондау ұзақтығын таңдаңыз:",
+  "minutes": "минут",
+  "confirmCancellation": "Бас тартуды растаңыз",
+  "areYouSureYouWantToCancelTheReservation": "Брондаудан бас тартқыңыз келе ме?",
+  "no": "Жоқ",
+  "yes": "Ия",
+
 
   "account": "Account"
 }

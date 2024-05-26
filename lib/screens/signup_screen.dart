@@ -1,14 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';  // Firebase Firestore-мен жұмыс істеу үшін қажет
+import 'package:email_validator/email_validator.dart';  // Email-дің дұрыстығын тексеру үшін қажет
+import 'package:firebase_auth/firebase_auth.dart';  // Firebase аутентификациясы үшін қажет
 
-import 'package:flutter/material.dart';
-import 'package:oryntapp/services/snack_bar.dart';
+import 'package:flutter/material.dart';  // Flutter-дың негізгі пакеті
+import 'package:oryntapp/services/snack_bar.dart';  // Snackbar қызметін пайдалану үшін қажет
 
-import 'package:oryntapp/language/language.dart';
-import 'package:oryntapp/language/language_constants.dart';
+import 'package:oryntapp/language/language.dart';  // Тілдік параметрлерді пайдалану үшін қажет
+import 'package:oryntapp/language/language_constants.dart';  // Тілдік константтарды пайдалану үшін қажет
 
-import '../main.dart';
+import '../main.dart';  // Негізгі қолданба файлын импорттау
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,15 +18,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreen extends State<SignUpScreen> {
-  bool isHiddenPassword = true;
-  TextEditingController emailTextInputController = TextEditingController();
-  TextEditingController passwordTextInputController = TextEditingController();
-  TextEditingController passwordTextRepeatInputController =
-      TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  bool isHiddenPassword = true;  // Құпия сөзді көрсету/жасыру
+  TextEditingController emailTextInputController = TextEditingController();  // Email енгізу өрісі үшін контроллер
+  TextEditingController passwordTextInputController = TextEditingController();  // Құпия сөзді енгізу өрісі үшін контроллер
+  TextEditingController passwordTextRepeatInputController = TextEditingController();  // Құпия сөзді қайта енгізу өрісі үшін контроллер
+  final formKey = GlobalKey<FormState>();  // Форма күйін бақылау үшін кілт
 
   @override
   void dispose() {
+    // Контроллерлерді тазалау
     emailTextInputController.dispose();
     passwordTextInputController.dispose();
     passwordTextRepeatInputController.dispose();
@@ -35,15 +35,16 @@ class _SignUpScreen extends State<SignUpScreen> {
   }
 
   void togglePasswordView() {
+    // Құпия сөзді көрсету/жасыру күйін өзгерту
     setState(() {
       isHiddenPassword = !isHiddenPassword;
     });
   }
-
+  // Қолданушыны тіркеу функциясы.
   Future<void> signUp() async {
     final navigator = Navigator.of(context);
 
-    final isValid = formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate(); // Форма деректерін тексеру
     if (!isValid) return;
 
     if (passwordTextInputController.text !=
@@ -62,7 +63,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         email: emailTextInputController.text.trim(),
         password: passwordTextInputController.text.trim(),
       );
-
+      // Жаңа қолданушыны Firestore-ға қосу
       FirebaseFirestore.instance
           .collection('Users')
           .doc(userCredential.user!.email)
@@ -88,7 +89,7 @@ class _SignUpScreen extends State<SignUpScreen> {
         );
       }
     }
-
+    // Тіркелгеннен кейін басты экранға ауысу
     navigator.pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
   }
 
@@ -107,6 +108,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 Icons.language,
               ),
               onChanged: (Language? language) async {
+                // Тілді өзгерту
                 if (language != null) {
                   Locale _locale = await setLocale(language.languageCode);
                   MyApp.setLocale(context, _locale);
@@ -139,7 +141,7 @@ class _SignUpScreen extends State<SignUpScreen> {
           key: formKey,
           child: Column(
             children: [
-
+              // Қолданбаның атауы
               Text(
                 'OrynTapp',
                 style: TextStyle(
@@ -149,7 +151,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 50),
-
+              // Email енгізу өрісі
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -167,7 +169,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               ),
 
               const SizedBox(height: 10),
-
+              // Құпия сөз енгізу өрісі
               TextFormField(
                 autocorrect: false,
                 controller: passwordTextInputController,
@@ -194,7 +196,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               ),
 
               const SizedBox(height: 10),
-
+              // Құпия сөзді қайта енгізу өрісі
               TextFormField(
                 autocorrect: false,
                 controller: passwordTextRepeatInputController,
@@ -221,7 +223,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               ),
 
               const SizedBox(height: 20),
-
+              // Тіркелу батырмасы
               ElevatedButton(
                 onPressed: signUp,
                 style: ElevatedButton.styleFrom(
@@ -238,6 +240,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               Spacer(),
+              // Тіркелген жағдайда кіру батырмасы
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -258,7 +261,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                   ),
                 ],
               ),
-
             ],
           ),
         ),
